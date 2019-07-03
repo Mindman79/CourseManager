@@ -1,10 +1,19 @@
-package com.tristankirkham.coursemanager.model;
+package com.tristankirkham.coursemanager.database;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
+import java.util.Date;
+
+@Entity(tableName = "course")
 
 public class CourseEntity {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     private int status;
     private String mentorName;
     private String mentorPhone;
@@ -13,7 +22,7 @@ public class CourseEntity {
 
 
     //Create new course
-    public CourseEntity(int id, String startDate, String endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int termID) {
+    public CourseEntity(int id, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int termID) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -24,8 +33,10 @@ public class CourseEntity {
         this.termID = termID;
     }
 
+
     //Edit existing course
-    public CourseEntity(String startDate, String endDate, int status, String mentorName, String mentorPhone, String mentorEmail) {
+    @Ignore
+    public CourseEntity(Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -35,6 +46,7 @@ public class CourseEntity {
     }
 
     //Set course items individually
+    @Ignore
     public CourseEntity() {
     }
 
@@ -47,19 +59,19 @@ public class CourseEntity {
         this.id = id;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

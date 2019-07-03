@@ -1,23 +1,29 @@
-package com.tristankirkham.coursemanager.model;
+package com.tristankirkham.coursemanager.database;
 
-import java.text.SimpleDateFormat;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity(tableName = "term")
 public class TermEntity {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     //private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
 
     //Create term, assign values individually
+    @Ignore
     public TermEntity() {
     }
 
 
     //Create new term
-    public TermEntity(int id, String title, String startDate, String endDate) {
+    public TermEntity(int id, String title, Date startDate, Date endDate) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
@@ -25,7 +31,8 @@ public class TermEntity {
     }
 
     //Edit existing term
-    public TermEntity(String title, String startDate, String endDate) {
+    @Ignore
+    public TermEntity(String title, Date startDate, Date endDate) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -47,19 +54,19 @@ public class TermEntity {
         this.title = title;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

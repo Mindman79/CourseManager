@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tristankirkham.coursemanager.R;
-import com.tristankirkham.coursemanager.model.TermEntity;
+import com.tristankirkham.coursemanager.database.TermEntity;
 
 import java.util.List;
 

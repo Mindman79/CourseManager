@@ -1,26 +1,28 @@
 package com.tristankirkham.coursemanager;
 
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.tristankirkham.coursemanager.model.TermEntity;
+import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.ui.TermAdapter;
 import com.tristankirkham.coursemanager.utilities.SampleData;
+import com.tristankirkham.coursemanager.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,11 +30,21 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.recycler_view)
     RecyclerView mainRecyclerView;
 
+    //Floating action button click handler
+    @OnClick(R.id.fab)
+    void fabClickHandler() {
+        Intent intent = new Intent(this, TermEditorActivity.class);
+        startActivity(intent);
+    }
+
     //Sample data section
     private List<TermEntity> termData = new ArrayList<>();
 
     //Declare adapter
     private TermAdapter tAdapter;
+
+    //Declare ViewModel class in a field
+    private TermViewModel termViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        //ViewModel
+        initViewModel();
 
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
 
 
         //Add in the sample data
-        termData.addAll(SampleData.getTerms());
+        termData.addAll(termViewModel.termList);
         //ForEach to loop through each element of the term class
         for (TermEntity terms : termData) {
             Log.i("CourseManager", terms.toString());
@@ -68,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
         initRecyclerView();
 
+    }
+
+    private void initViewModel() {
+        termViewModel = ViewModelProviders.of(this)
+                .get(TermViewModel.class);
     }
 
     @Override

@@ -1,25 +1,33 @@
-package com.tristankirkham.coursemanager.model;
+package com.tristankirkham.coursemanager.database;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
+@Entity(tableName = "assessment")
 public class AssessmentEntity {
 
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private String type;
-    private String date;
+    private Date date;
     private int courseId;
 
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+    //private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
 
 
 
     //Set assessment items individually
+    @Ignore
     public AssessmentEntity() {
     }
 
     //Create new assessment
-    public AssessmentEntity(int id, String name, String type, String date, int courseId) {
+    public AssessmentEntity(int id, String name, String type, Date date, int courseId) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -28,7 +36,8 @@ public class AssessmentEntity {
     }
 
     //Edit existing assessment
-    public AssessmentEntity(String name, String type, String date) {
+    @Ignore
+    public AssessmentEntity(String name, String type, Date date) {
         this.name = name;
         this.type = type;
         this.date = date;
@@ -59,11 +68,11 @@ public class AssessmentEntity {
         this.type = type;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
