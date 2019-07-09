@@ -1,9 +1,10 @@
 package com.tristankirkham.coursemanager;
 
-import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,6 @@ import android.view.MenuItem;
 
 import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.ui.TermAdapter;
-import com.tristankirkham.coursemanager.utilities.SampleData;
 import com.tristankirkham.coursemanager.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
@@ -53,33 +53,45 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Bind view
         ButterKnife.bind(this);
 
-        //ViewModel
+        //Init RecyclerView
+        initRecyclerView();
+
+        //Init ViewModel
         initViewModel();
 
-
-
-
-
-        //Add in the sample data
-        termData.addAll(termViewModel.termList);
-        //ForEach to loop through each element of the term class
-        for (TermEntity terms : termData) {
-            Log.i("CourseManager", terms.toString());
-
-
-
-
-        }
-
-        initRecyclerView();
 
     }
 
     private void initViewModel() {
+
+
+        final Observer<List<TermEntity>> termsObserver = new Observer<List<TermEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<TermEntity> termEntities) {
+                termData.clear();
+                termData.addAll(termEntities);
+
+
+                if (tAdapter == null) {
+
+                    //Instantiate the adapter
+                    tAdapter = new TermAdapter(termData, MainActivity.this);
+                    mainRecyclerView.setAdapter(tAdapter);
+
+                } else {
+                    tAdapter.notifyDataSetChanged();
+                }
+
+            }
+        };
+
         termViewModel = ViewModelProviders.of(this)
                 .get(TermViewModel.class);
+
+        termViewModel.termList.observe(this, termsObserver);
     }
 
     @Override
@@ -97,13 +109,33 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add_sample_data) {
+            //TODO: Remove this sample data reference, but adding it here for now
+            addSampleData();
+            return true;
+
+        } else if (id == R.id.action_delete_all) {
+
+            deleteAllTerms();
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
 
+    private void deleteAllTerms() {
+
+        termViewModel.deleteAllTerms();
+
+    }
+
+    private void addSampleData() {
+
+        termViewModel.addSampleData();
+
+    }
 
 
     //Sets each RecyclerView item to same height
@@ -113,9 +145,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mainRecyclerView.setLayoutManager(layoutManager);
 
-        //Instantiate the adapter
-        tAdapter = new TermAdapter(termData, this);
-        mainRecyclerView.setAdapter(tAdapter);
+
 
     }
 

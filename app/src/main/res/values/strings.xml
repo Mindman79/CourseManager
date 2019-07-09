@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Course Manager</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_term_editor">TermEditorActivity</string>
+    <string name="action_add_sample_data">Add sample data</string>
+    <string name="title_activity_term_editor">Term Editor</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -92,4 +92,5 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="enter_term_info">Enter term info</string>
+    <string name="delete_all">Delete all terms</string>
 </resources>
