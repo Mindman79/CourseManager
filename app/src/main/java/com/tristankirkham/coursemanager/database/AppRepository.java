@@ -58,4 +58,8 @@ public class AppRepository {
         });
 
     }
+
+    public TermEntity getTermById(int termId) {
+        return Db.termDao().getTermById(termId);
+    }
 }

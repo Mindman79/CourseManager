@@ -1,7 +1,9 @@
 package com.tristankirkham.coursemanager.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tristankirkham.coursemanager.R;
+import com.tristankirkham.coursemanager.TermEditorActivity;
 import com.tristankirkham.coursemanager.database.TermEntity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
@@ -46,6 +51,19 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
         final TermEntity term = tTerms.get(position);
         holder.tTextView.setText(term.getTitle());
 
+        //Set edit FAB click listener
+        holder.tFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(tContext, TermEditorActivity.class);
+                intent.putExtra(TERM_ID_KEY, term.getId());
+                tContext.startActivity(intent);
+
+            }
+        });
+
+
     }
 
     @Override
@@ -57,6 +75,11 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
         @BindView(R.id.textView)
         //Needs to match ID of TextView in layout file
         TextView tTextView;
+
+        @BindView(R.id.fab)
+        FloatingActionButton tFab;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
