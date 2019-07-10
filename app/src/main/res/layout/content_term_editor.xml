@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,13 +9,45 @@
     tools:showIn="@layout/activity_term_editor">
 
     <EditText
-        android:id="@+id/term_editor"
+        android:id="@+id/term_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:hint="@string/enter_term_info"
-        android:text="@string/large_text"
-        android:inputType="textMultiLine|textCapSentences"/>
+        android:hint="Enter term name"
+        android:inputType="textMultiLine|textCapSentences"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</android.support.v4.widget.NestedScrollView>
+
+    <EditText
+        android:id="@+id/term_start_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:ems="10"
+        android:hint="Term start date (MM/YY/YYYY)"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="67dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/term_title" />
+
+    <EditText
+        android:id="@+id/term_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:ems="10"
+        android:hint="Term end date (MM/YY/YYYY)"
+        android:inputType="date"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="138dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/term_start_date" />
+
+
+</android.support.constraint.ConstraintLayout>
