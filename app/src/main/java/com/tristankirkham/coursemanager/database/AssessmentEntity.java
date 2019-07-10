@@ -4,7 +4,6 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity(tableName = "assessment")

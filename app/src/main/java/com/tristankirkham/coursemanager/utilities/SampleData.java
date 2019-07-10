@@ -30,7 +30,7 @@ public class SampleData {
     public static List<TermEntity> getTerms() {
         List<TermEntity> terms = new ArrayList<>();
         terms.add(new TermEntity(1, "Spring Term", getDate(0), getDate(1) ));
-        terms.add(new TermEntity(2, "Summer Term",getDate(2), getDate(3) ));
+        terms.add(new TermEntity(2, "Summer Term", getDate(2), getDate(3) ));
         terms.add(new TermEntity(3, "Fall Term", getDate(4), getDate(5) ));
         return terms;
     }

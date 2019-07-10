@@ -22,7 +22,7 @@ public interface TermDao {
 
     //Delete a term
     @Delete
-    void deleteNote(TermEntity termEntity);
+    void deleteTerm(TermEntity termEntity);
 
     //Delete term by ID
     @Query("SELECT * FROM term WHERE id = :id")

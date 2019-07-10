@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import com.tristankirkham.coursemanager.database.AppRepository;
 import com.tristankirkham.coursemanager.database.TermEntity;
 
-
 import java.util.List;
 
 public class TermViewModel  extends AndroidViewModel {
