@@ -15,6 +15,7 @@ import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class TermEditorActivity extends AppCompatActivity {
 
-    //TODO: Add the rest of the fields here
+    
     //Bind views
     @BindView(R.id.term_title)
     TextView termTitle;
@@ -146,14 +147,27 @@ public class TermEditorActivity extends AppCompatActivity {
 
         //TODO: Add other fields here?
 
-        String title = termTitle.getText().toString();
-        String startDate = termStartDate.getText().toString();
-        String endDate = termEndDate.getText().toString();
 
-        termViewModel.saveTerm(termTitle.getText().toString(), termStartDate.getText().toString(), termEndDate.getText().toString());
+        try {
 
 
-        finish();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
+
+            Date startDate = simpleDateFormat.parse(termStartDate.getText().toString());
+            Date endDate = simpleDateFormat.parse(termEndDate.getText().toString());
+
+
+            termViewModel.saveTerm(termTitle.getText().toString(), startDate, endDate);
+
+
+            finish();
+
+
+        } catch(java.text.ParseException e) {
+            e.printStackTrace();
+        }
+
+
 
 
     }

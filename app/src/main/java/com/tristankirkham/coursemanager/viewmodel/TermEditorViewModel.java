@@ -38,7 +38,7 @@ public class TermEditorViewModel extends AndroidViewModel {
 
     }
 
-    public void saveTerm(String termTitle, String startDate, String endDate) {
+    public void saveTerm(String termTitle, Date startDate, Date endDate) {
         TermEntity term = tLiveTerm.getValue();
 
 

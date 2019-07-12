@@ -52,8 +52,8 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final TermEntity term = tTerms.get(position);
         holder.termTitle.setText(term.getTitle());
-        holder.termStartDate.setText(term.getStartDate());
-        holder.termEndDate.setText(term.getEndDate());
+        holder.termStartDate.setText(term.getStartDate().toString());
+        holder.termEndDate.setText(term.getEndDate().toString());
 
 
         //Set edit FAB click listener

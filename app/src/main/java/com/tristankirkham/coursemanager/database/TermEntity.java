@@ -14,9 +14,9 @@ public class TermEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private String startDate;
-    private String endDate;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+    private Date startDate;
+    private Date endDate;
+
 
     //Create term, assign values individually
     @Ignore
@@ -25,7 +25,7 @@ public class TermEntity {
 
 
     //Create new term
-    public TermEntity(int id, String title, String startDate, String endDate) {
+    public TermEntity(int id, String title, Date startDate, Date endDate) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
@@ -34,7 +34,7 @@ public class TermEntity {
 
     //Edit existing term
     @Ignore
-    public TermEntity(String title, String startDate, String endDate) {
+    public TermEntity(String title, Date startDate, Date endDate) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -56,29 +56,22 @@ public class TermEntity {
         this.title = title;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    public SimpleDateFormat getDateFormatter() {
-        return dateFormatter;
-    }
-
-   public void setDateFormatter(SimpleDateFormat dateFormatter) {
-        this.dateFormatter = dateFormatter;
-    }
 
 
     @Override
@@ -89,29 +82,6 @@ public class TermEntity {
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 '}';
-    }
-
-
-    public boolean isTermValid() {
-        if (title.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
-            return false;
-        }
-
-        try {
-            //Check date format
-            Date start = dateFormatter.parse(startDate);
-            Date end = dateFormatter.parse(endDate);
-
-            //Start date must be before end date
-            if (!start.before(end)) {
-                return false;
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
     }
 
 
