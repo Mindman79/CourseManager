@@ -14,6 +14,8 @@ import com.tristankirkham.coursemanager.R;
 import com.tristankirkham.coursemanager.TermEditorActivity;
 import com.tristankirkham.coursemanager.database.TermEntity;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,10 +51,13 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final TermEntity term = tTerms.get(position);
-        holder.tTextView.setText(term.getTitle());
+        holder.termTitle.setText(term.getTitle());
+        holder.termStartDate.setText(term.getStartDate());
+        holder.termEndDate.setText(term.getEndDate());
+
 
         //Set edit FAB click listener
-        holder.tFab.setOnClickListener(new View.OnClickListener() {
+        holder.termFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -72,12 +77,19 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.textView)
+
         //Needs to match ID of TextView in layout file
-        TextView tTextView;
+        @BindView(R.id.textView)
+        TextView termTitle;
+
+        @BindView(R.id.term_start_date)
+        TextView termStartDate;
+
+        @BindView(R.id.term_end_date)
+        TextView termEndDate;
 
         @BindView(R.id.fab)
-        FloatingActionButton tFab;
+        FloatingActionButton termFab;
 
 
 

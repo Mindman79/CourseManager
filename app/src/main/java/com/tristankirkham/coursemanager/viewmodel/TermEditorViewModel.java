@@ -38,7 +38,7 @@ public class TermEditorViewModel extends AndroidViewModel {
 
     }
 
-    public void saveTerm(String termTitle) {
+    public void saveTerm(String termTitle, String startDate, String endDate) {
         TermEntity term = tLiveTerm.getValue();
 
 
@@ -48,11 +48,13 @@ public class TermEditorViewModel extends AndroidViewModel {
                 return;
 
             }
-            term = new TermEntity(termTitle.trim(), new Date(), new Date());
+            term = new TermEntity(termTitle.trim(), startDate, endDate);
 
 
         } else {
             term.setTitle(termTitle.trim());
+            term.setStartDate(startDate);
+            term.setEndDate(endDate);
 
         }
         tRepository.insertTerm(term);

@@ -14,6 +14,9 @@ import android.widget.TextView;
 import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
+import java.text.ParseException;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -22,15 +25,21 @@ import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class TermEditorActivity extends AppCompatActivity {
 
-    //Bind view
-    @BindView(R.id.term_editor)
-
     //TODO: Add the rest of the fields here
-    TextView tTextView;
+    //Bind views
+    @BindView(R.id.term_title)
+    TextView termTitle;
+
+    @BindView(R.id.term_start_date)
+    TextView termStartDate;
+
+    @BindView(R.id.term_end_date)
+    TextView termEndDate;
+
 
     //Register ViewModel
-    private TermEditorViewModel tViewModel;
-    private boolean tNewTerm, tEditing;
+    private TermEditorViewModel termViewModel;
+    private boolean isNewTerm, isEditing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,45 +57,47 @@ public class TermEditorActivity extends AppCompatActivity {
         //Restore data if device orientation changes
         if (savedInstanceState != null) {
 
-            tEditing = savedInstanceState.getBoolean(EDITING_KEY);
+            isEditing = savedInstanceState.getBoolean(EDITING_KEY);
 
         }
 
         //Initialize the ViewModel
-        initViewModel();
+        initTermViewModel();
 
     }
 
     //Initialize ViewModel
-    private void initViewModel() {
+    private void initTermViewModel() {
 
-        tViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
-        tViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
+        termViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
+        termViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
             @Override
             public void onChanged(@Nullable TermEntity termEntity) {
 
-                if (termEntity != null && !tEditing)
+                if (termEntity != null && !isEditing)
 
-                //TODO: Add the rest of the fields here
-                tTextView.setText(termEntity.getTitle());
+                    //TODO: Add the rest of the fields here
+                    termTitle.setText(termEntity.getTitle());
+                    termStartDate.setText(termEntity.getStartDate().toString());
+                    termEndDate.setText(termEntity.getEndDate().toString());
+
 
             }
         });
 
         Bundle extras = getIntent().getExtras();
 
-        //Check if Term is new or not, and set title accordingly
+        //Check if Term is new or not, and set title of edit page accordingly
         if (extras == null) {
             setTitle(R.string.new_term);
-            tNewTerm = true;
+            isNewTerm = true;
 
         } else {
             setTitle(R.string.edit_term);
 
-            //TODO: Add other fields here
+            //TODO: Add other fields here (maybe)
             int termId = extras.getInt(TERM_ID_KEY);
-            tViewModel.loadData(termId);
-
+            termViewModel.loadData(termId);
 
 
         }
@@ -96,7 +107,7 @@ public class TermEditorActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if (!tNewTerm) {
+        if (!isNewTerm) {
 
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.menu_term_editor, menu);
@@ -114,9 +125,8 @@ public class TermEditorActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
 
-        tViewModel.deleteTerm();
-        finish();
-
+            termViewModel.deleteTerm();
+            finish();
 
 
         }
@@ -135,11 +145,23 @@ public class TermEditorActivity extends AppCompatActivity {
     private void saveAndReturn() {
 
         //TODO: Add other fields here?
-        tViewModel.saveTerm(tTextView.getText().toString());
+
+        String title = termTitle.getText().toString();
+        String startDate = termStartDate.getText().toString();
+        String endDate = termEndDate.getText().toString();
+
+        termViewModel.saveTerm(termTitle.getText().toString(), termStartDate.getText().toString(), termEndDate.getText().toString());
+
+
         finish();
 
 
     }
+
+
+
+
+
 
     //Save date when device changes orientation
     @Override
@@ -147,4 +169,11 @@ public class TermEditorActivity extends AppCompatActivity {
         outState.putBoolean(EDITING_KEY, true);
         super.onSaveInstanceState(outState);
     }
+
+
+
+
+
+
+
 }

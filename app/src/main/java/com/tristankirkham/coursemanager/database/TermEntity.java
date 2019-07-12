@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity(tableName = "term")
@@ -12,9 +14,9 @@ public class TermEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
-    private Date startDate;
-    private Date endDate;
-    //private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+    private String startDate;
+    private String endDate;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
 
     //Create term, assign values individually
     @Ignore
@@ -23,7 +25,7 @@ public class TermEntity {
 
 
     //Create new term
-    public TermEntity(int id, String title, Date startDate, Date endDate) {
+    public TermEntity(int id, String title, String startDate, String endDate) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
@@ -32,7 +34,7 @@ public class TermEntity {
 
     //Edit existing term
     @Ignore
-    public TermEntity(String title, Date startDate, Date endDate) {
+    public TermEntity(String title, String startDate, String endDate) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -54,29 +56,29 @@ public class TermEntity {
         this.title = title;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-//    public SimpleDateFormat getDateFormatter() {
-//        return dateFormatter;
-//    }
+    public SimpleDateFormat getDateFormatter() {
+        return dateFormatter;
+    }
 
-   /* public void setDateFormatter(SimpleDateFormat dateFormatter) {
+   public void setDateFormatter(SimpleDateFormat dateFormatter) {
         this.dateFormatter = dateFormatter;
-    }*/
+    }
 
 
     @Override
@@ -86,7 +88,34 @@ public class TermEntity {
                 ", title='" + title + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
-//                ", dateFormatter=" + dateFormatter +
                 '}';
     }
+
+
+    public boolean isTermValid() {
+        if (title.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
+            return false;
+        }
+
+        try {
+            //Check date format
+            Date start = dateFormatter.parse(startDate);
+            Date end = dateFormatter.parse(endDate);
+
+            //Start date must be before end date
+            if (!start.before(end)) {
+                return false;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
+
+
+
+
+
 }
