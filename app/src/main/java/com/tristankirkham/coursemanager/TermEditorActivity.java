@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.tristankirkham.coursemanager.database.DateConverter;
 import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
@@ -76,6 +77,8 @@ public class TermEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable TermEntity termEntity) {
 
                 if (termEntity != null && !isEditing)
+
+
 
                     //TODO: Add the rest of the fields here
                     termTitle.setText(termEntity.getTitle());
@@ -151,11 +154,15 @@ public class TermEditorActivity extends AppCompatActivity {
         try {
 
 
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
 
             Date startDate = simpleDateFormat.parse(termStartDate.getText().toString());
             Date endDate = simpleDateFormat.parse(termEndDate.getText().toString());
 
+
+            DateConverter.toTimestamp(startDate);
+            DateConverter.toTimestamp(endDate);
 
             termViewModel.saveTerm(termTitle.getText().toString(), startDate, endDate);
 
