@@ -6,21 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextClock;
 import android.widget.TextView;
 
-import com.tristankirkham.coursemanager.database.DateConverter;
 import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -97,11 +90,11 @@ public class TermEditorActivity extends AppCompatActivity {
 
         //Check if Term is new or not, and set title of edit page accordingly
         if (extras == null) {
-            setTitle(R.string.new_term);
+            setTitle("New term");
             isNewTerm = true;
 
         } else {
-            setTitle(R.string.edit_term);
+            setTitle("Edit term");
 
             //TODO: Add other fields here (maybe)
             int termId = extras.getInt(TERM_ID_KEY);
