@@ -2,6 +2,7 @@ package com.tristankirkham.coursemanager;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
@@ -154,26 +156,7 @@ public class TermEditorActivity extends AppCompatActivity {
         finish();
 
 
-       /* try {
 
-
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-DD");
-
-            Date startDate = simpleDateFormat.parse(termStartDate.getText().toString());
-            Date endDate = simpleDateFormat.parse(termEndDate.getText().toString());
-
-
-            DateConverter.toTimestamp(startDate);
-            DateConverter.toTimestamp(endDate);
-
-
-
-        } catch(java.text.ParseException e) {
-            e.printStackTrace();
-        }
-
-*/
 
 
     }
@@ -192,6 +175,18 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
 
+    @OnClick(R.id.save_button)
+    void saveButtonClickHandler() {
+        saveAndReturn();
+    }
+
+
+    //TODO: Change this to course editor activity
+    @OnClick(R.id.add_course_button)
+    void fabClickHandler() {
+        Intent intent = new Intent(this, TermEditorActivity.class);
+        startActivity(intent);
+    }
 
 
 
