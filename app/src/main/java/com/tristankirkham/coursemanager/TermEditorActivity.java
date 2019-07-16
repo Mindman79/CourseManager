@@ -10,11 +10,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.tristankirkham.coursemanager.database.DateConverter;
 import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
+
+import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -28,7 +31,7 @@ import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class TermEditorActivity extends AppCompatActivity {
 
-    
+
     //Bind views
     @BindView(R.id.term_title)
     TextView termTitle;
@@ -149,10 +152,16 @@ public class TermEditorActivity extends AppCompatActivity {
 
     private void saveAndReturn() {
 
-        //TODO: Add other fields here?
 
 
-        try {
+
+        termViewModel.saveTerm(termTitle.getText().toString(), new Date(termStartDate.getText().toString()), new Date(termEndDate.getText().toString()));
+
+
+        finish();
+
+
+       /* try {
 
 
 
@@ -165,17 +174,13 @@ public class TermEditorActivity extends AppCompatActivity {
             DateConverter.toTimestamp(startDate);
             DateConverter.toTimestamp(endDate);
 
-            termViewModel.saveTerm(termTitle.getText().toString(), startDate, endDate);
-
-
-            finish();
 
 
         } catch(java.text.ParseException e) {
             e.printStackTrace();
         }
 
-
+*/
 
 
     }
