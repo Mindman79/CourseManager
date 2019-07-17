@@ -184,7 +184,8 @@ public class TermEditorActivity extends AppCompatActivity {
     //TODO: Change this to course editor activity
     @OnClick(R.id.add_course_button)
     void fabClickHandler() {
-        Intent intent = new Intent(this, TermEditorActivity.class);
+        Intent intent = new Intent(this, CourseEditorActivity.class);
+        intent.putExtra("term_title", termTitle);
         startActivity(intent);
     }
 

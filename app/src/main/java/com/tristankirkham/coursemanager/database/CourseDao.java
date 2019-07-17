@@ -24,9 +24,9 @@ public interface CourseDao {
     @Query("SELECT * FROM course WHERE course_id = :course_id")
     CourseEntity getCourseById(int course_id);
 
-    //TODO: Check on this, see if it's needed and/or correct
+   /* //TODO: Check on this, see if it's needed and/or correct
     @Query("SELECT * FROM course WHERE term_id = :term_id")
-    CourseEntity getAssociatedTerms(int term_id);
+    CourseEntity getAssociatedTerms(int term_id);*/
 
     //Delete a course
     @Delete

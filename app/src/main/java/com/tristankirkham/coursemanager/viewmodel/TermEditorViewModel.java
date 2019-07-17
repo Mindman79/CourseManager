@@ -16,12 +16,12 @@ import java.util.concurrent.Executors;
 public class TermEditorViewModel extends AndroidViewModel {
 
     public MutableLiveData<TermEntity> tLiveTerm = new MutableLiveData<>();
-    private AppRepository tRepository;
+    private AppRepository tRepository = AppRepository.getInstance(getApplication());
     private Executor executor = Executors.newSingleThreadExecutor();
 
     public TermEditorViewModel(@NonNull Application application) {
         super(application);
-        tRepository = AppRepository.getInstance(getApplication());
+
     }
 
 

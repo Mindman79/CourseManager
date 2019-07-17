@@ -86,4 +86,32 @@ public class AppRepository {
 
 
     }
+
+    public CourseEntity getCourseByID(int course_id) {
+
+        return Db.courseDao().getCourseById(course_id);
+
+    }
+
+
+    public void insertCourse(final CourseEntity course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Db.courseDao().insertCourse(course);
+            }
+        });
+
+    }
+
+    public void deleteCourse(final CourseEntity value) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Db.courseDao().deleteCourse(value);
+            }
+        });
+
+    }
 }
