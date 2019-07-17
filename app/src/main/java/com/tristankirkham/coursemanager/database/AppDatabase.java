@@ -17,6 +17,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     //TODO add all the rest of the Daos when they exist
     public abstract TermDao termDao();
+    public abstract CourseDao courseDao();
 
 
     //Get instance of DB, confirm it's not null, and then build it

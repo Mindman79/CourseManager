@@ -1,13 +1,18 @@
 package com.tristankirkham.coursemanager.database;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+//@Entity(tableName = "course")
+
 
 @Entity(tableName = "course", foreignKeys = @ForeignKey(entity = TermEntity.class, onDelete = CASCADE, parentColumns = "term_id", childColumns = "course_id"))
 
@@ -15,6 +20,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class CourseEntity {
 
     @PrimaryKey(autoGenerate = true)
+
     private int course_id;
     private String courseName;
     private Date startDate;
@@ -29,6 +35,7 @@ public class CourseEntity {
     //Create new course
     public CourseEntity(int course_id, String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int term_id) {
         this.course_id = course_id;
+        this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -38,10 +45,10 @@ public class CourseEntity {
         this.term_id = term_id;
     }
 
-
     //Edit existing course
     @Ignore
-    public CourseEntity(Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail) {
+    public CourseEntity(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail) {
+        this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
@@ -49,6 +56,9 @@ public class CourseEntity {
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
     }
+
+
+
 
     //Set course items individually
     @Ignore
@@ -62,6 +72,14 @@ public class CourseEntity {
 
     public void setCourse_id(int course_id) {
         this.course_id = course_id;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public Date getStartDate() {
@@ -116,17 +134,8 @@ public class CourseEntity {
         return term_id;
     }
 
-    public void setTerm_id(int termID) {
+    public void setTerm_id(int term_id) {
         this.term_id = term_id;
-    }
-
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
     }
 
     @Override
