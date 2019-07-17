@@ -12,7 +12,7 @@ import java.util.Date;
 public class TermEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int term_id;
     private String title;
     private Date startDate;
     private Date endDate;
@@ -25,8 +25,8 @@ public class TermEntity {
 
 
     //Create new term
-    public TermEntity(int id, String title, Date startDate, Date endDate) {
-        this.id = id;
+    public TermEntity(int term_id, String title, Date startDate, Date endDate) {
+        this.term_id = term_id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -40,12 +40,12 @@ public class TermEntity {
         this.endDate = endDate;
     }
 
-    public int getId() {
-        return id;
+    public int getTerm_id() {
+        return term_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTerm_id(int term_id) {
+        this.term_id = term_id;
     }
 
     public String getTitle() {
@@ -77,7 +77,7 @@ public class TermEntity {
     @Override
     public String toString() {
         return "TermEntity{" +
-                "id=" + id +
+                "term_id=" + term_id +
                 ", title='" + title + '\'' +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +

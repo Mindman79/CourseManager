@@ -1,36 +1,41 @@
 package com.tristankirkham.coursemanager.database;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "course")
+import static android.arch.persistence.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "course", foreignKeys = @ForeignKey(entity = TermEntity.class, onDelete = CASCADE, parentColumns = "term_id", childColumns = "course_id"))
+
 
 public class CourseEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private int course_id;
+    private String courseName;
     private Date startDate;
     private Date endDate;
     private int status;
     private String mentorName;
     private String mentorPhone;
     private String mentorEmail;
-    private int termID;
+    private int term_id;
 
 
     //Create new course
-    public CourseEntity(int id, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int termID) {
-        this.id = id;
+    public CourseEntity(int course_id, String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int term_id) {
+        this.course_id = course_id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.termID = termID;
+        this.term_id = term_id;
     }
 
 
@@ -51,12 +56,12 @@ public class CourseEntity {
     }
 
 
-    public int getId() {
-        return id;
+    public int getCourse_id() {
+        return course_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCourse_id(int course_id) {
+        this.course_id = course_id;
     }
 
     public Date getStartDate() {
@@ -107,26 +112,39 @@ public class CourseEntity {
         this.mentorEmail = mentorEmail;
     }
 
-    public int getTermID() {
-        return termID;
+    public int getTerm_id() {
+        return term_id;
     }
 
-    public void setTermID(int termID) {
-        this.termID = termID;
+    public void setTerm_id(int termID) {
+        this.term_id = term_id;
     }
 
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
 
     @Override
     public String toString() {
         return "CourseEntity{" +
-                "id=" + id +
+                "id=" + course_id +
                 ", startDate='" + startDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", status=" + status +
                 ", mentorName='" + mentorName + '\'' +
                 ", mentorPhone='" + mentorPhone + '\'' +
                 ", mentorEmail='" + mentorEmail + '\'' +
-                ", termID=" + termID +
+                ", termID=" + term_id +
                 '}';
     }
+
+
+
+
+
 }

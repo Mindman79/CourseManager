@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, exportSchema = false, version = 1)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, exportSchema = false, version = 4)
 
 @TypeConverters(DateConverter.class)
 
@@ -24,7 +24,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if(instance == null) {
             synchronized (LOCK) {
                 if(instance == null) {
-                    instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME).build();
+                    instance = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
                 }
             }
         }

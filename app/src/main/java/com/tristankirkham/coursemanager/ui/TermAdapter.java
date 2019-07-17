@@ -3,7 +3,6 @@ package com.tristankirkham.coursemanager.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import com.tristankirkham.coursemanager.R;
 import com.tristankirkham.coursemanager.TermEditorActivity;
 import com.tristankirkham.coursemanager.database.TermEntity;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,13 +24,13 @@ import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
 
-    private final List<TermEntity> tTerms;
-    private final Context tContext;
+    private final List<TermEntity> termList;
+    private final Context termContext;
 
 
-    public TermAdapter(List<TermEntity> tTerms, Context tContext) {
-        this.tTerms = tTerms;
-        this.tContext = tContext;
+    public TermAdapter(List<TermEntity> termList, Context termContext) {
+        this.termList = termList;
+        this.termContext = termContext;
     }
 
     @NonNull
@@ -43,7 +40,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
 
         //Call layout view file here
-        View view = inflater.inflate(R.layout.note_list_item, parent,false);
+        View view = inflater.inflate(R.layout.term_list_item, parent,false);
         return new ViewHolder(view);
 
 
@@ -51,7 +48,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final TermEntity term = tTerms.get(position);
+        final TermEntity term = termList.get(position);
         holder.termTitle.setText(term.getTitle());
         /*holder.termStartDate.setText(term.getStartDate().toString());
         holder.termEndDate.setText(term.getEndDate().toString());*/
@@ -62,9 +59,9 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(tContext, TermEditorActivity.class);
-                intent.putExtra(TERM_ID_KEY, term.getId());
-                tContext.startActivity(intent);
+                Intent intent = new Intent(termContext, TermEditorActivity.class);
+                intent.putExtra(TERM_ID_KEY, term.getTerm_id());
+                termContext.startActivity(intent);
 
             }
         });
@@ -74,7 +71,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return tTerms.size();
+        return termList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -82,7 +79,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
         //Needs to match ID of TextView in layout file
 
 
-        @BindView(R.id.textView)
+        @BindView(R.id.term_title)
         TextView termTitle;
 
 
@@ -93,7 +90,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
         @BindView(R.id.note_end_date)
         TextView termEndDate;*/
 
-        @BindView(R.id.fab)
+        @BindView(R.id.term_fab)
         FloatingActionButton termFab;
 
 

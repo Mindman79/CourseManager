@@ -25,8 +25,8 @@ public interface TermDao {
     void deleteTerm(TermEntity termEntity);
 
     //Delete term by ID
-    @Query("SELECT * FROM term WHERE id = :id")
-    TermEntity getTermById(int id);
+    @Query("SELECT * FROM term WHERE term_id = :term_id")
+    TermEntity getTermById(int term_id);
 
     //Retrieve term by date
     @Query("SELECT * FROM term ORDER BY startDate DESC")
