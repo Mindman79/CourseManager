@@ -93,4 +93,5 @@
     </string>
     <string name="enter_term_info">Enter term info</string>
     <string name="delete_all">Delete all terms</string>
+    <string name="title_activity_course_editor">CourseEditorActivity</string>
 </resources>

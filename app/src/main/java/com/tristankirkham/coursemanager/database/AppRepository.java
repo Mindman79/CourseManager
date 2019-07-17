@@ -14,6 +14,7 @@ public class AppRepository {
 
     //TODO: Add other entities?
     public LiveData<List<TermEntity>> termList;
+    public LiveData<List<CourseEntity>> courseList;
     private AppDatabase Db;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -28,6 +29,13 @@ public class AppRepository {
     private AppRepository(Context context) {
         Db = AppDatabase.getInstance(context);
         termList = getAllTerms();
+        courseList = getAllCourses();
+
+
+    }
+
+    private LiveData<List<CourseEntity>> getAllCourses() {
+        return Db.courseDao().getAllCourses();
 
 
     }
