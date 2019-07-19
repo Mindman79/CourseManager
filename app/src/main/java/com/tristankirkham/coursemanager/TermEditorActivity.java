@@ -6,16 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
+import com.tristankirkham.coursemanager.ui.CourseAdapter;
+import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
+import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,10 +45,21 @@ public class TermEditorActivity extends AppCompatActivity {
     @BindView(R.id.term_end_date)
     TextView termEndDate;
 
+    //Course RecyclerView
+    @BindView(R.id.course_recyclerview)
+    RecyclerView courseRecyclerView;
+
 
     //Register ViewModel
     private TermEditorViewModel termViewModel;
     private boolean isNewTerm, isEditing;
+
+    //New instance of CourseAdapter
+    private CourseAdapter courseAdapter;
+
+    private List<CourseEntity> courseData = new ArrayList<>();
+    private CourseViewModel courseViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +72,7 @@ public class TermEditorActivity extends AppCompatActivity {
         //getSupportActionBar().setHomeAsUpIndicator(R.drawable.);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Bind Butterknife views
         ButterKnife.bind(this);
 
         //Restore data if device orientation changes
@@ -62,8 +82,63 @@ public class TermEditorActivity extends AppCompatActivity {
 
         }
 
-        //Initialize the ViewModel
+        //Initialize the ViewModels
         initTermViewModel();
+        initCourseViewModel();
+
+        //Initialize the course RecyclerView
+        initRecyclerView();
+
+    }
+
+    private void initCourseViewModel() {
+
+        final Observer<List<CourseEntity>> courseObserver = new Observer<List<CourseEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<CourseEntity> courseEntities) {
+                courseData.clear();
+                courseData.addAll(courseEntities);
+
+                if (courseAdapter == null) {
+                    courseAdapter = new CourseAdapter(courseData, TermEditorActivity.this);
+
+                    courseRecyclerView.setAdapter(courseAdapter);
+
+                } else {
+
+                    courseAdapter.notifyDataSetChanged();
+                }
+            }
+
+        };
+
+        courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
+        courseViewModel.courseList.observe(this, courseObserver);
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+    private void initRecyclerView() {
+
+        //Each item will be the same height
+        courseRecyclerView.setHasFixedSize(true);
+
+        //Create layoutManager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        //Pass in layoutmanager
+        courseRecyclerView.setLayoutManager(layoutManager);
+
+
 
     }
 
