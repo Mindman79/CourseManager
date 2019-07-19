@@ -53,13 +53,14 @@
         app:layout_constraintTop_toBottomOf="@+id/course_start_date" />
 
 
-    <EditText
+    <Spinner
         android:id="@+id/course_status"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="@dimen/text_margin"
         android:hint="Select course status"
-        android:inputType="number"
+        android:spinnerMode="dropdown"
+        android:entries="@array/course_status"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"

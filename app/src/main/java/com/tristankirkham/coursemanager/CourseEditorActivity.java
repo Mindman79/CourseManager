@@ -1,30 +1,52 @@
 package com.tristankirkham.coursemanager;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.tristankirkham.coursemanager.database.CourseEntity;
+import com.tristankirkham.coursemanager.database.TermEntity;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
+import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
+import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
+import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class CourseEditorActivity extends AppCompatActivity {
 
-    private boolean isNewTerm, isEditing;
+    private CourseEditorViewModel courseEditorViewModel;
+    private boolean isNewCourse, isEditing;
+
+    private ArrayAdapter<CharSequence> adapter;
+
     String termTitle;
 
-    private CourseEditorViewModel courseEditorViewModel;
+    private CharSequence position;
+
 
     @BindView(R.id.course_title)
     TextView courseTitle;
@@ -36,7 +58,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     TextView courseEndDate;
 
     @BindView(R.id.course_status)
-    TextView courseStatus;
+    Spinner courseStatus;
 
     @BindView(R.id.course_mentor_name)
     TextView mentorName;
@@ -56,14 +78,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         termTitle = getIntent().getStringExtra("term_title");
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -77,16 +92,113 @@ public class CourseEditorActivity extends AppCompatActivity {
         }
 
         //Initialize the ViewModel
-        //initTermViewModel();
+        initCourseViewModel();
 
+        //Initialize spinner
+        initSpinner();
+
+
+    }
+
+    private void initCourseViewModel() {
+
+
+        courseEditorViewModel = ViewModelProviders.of(this).get(CourseEditorViewModel.class);
+        courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
+            @Override
+            public void onChanged(@Nullable CourseEntity courseEntity) {
+
+                if (courseEntity != null && !isEditing)
+
+                    courseTitle.setText(courseEntity.getCourseName());
+                courseStartDate.setText(courseEntity.getStartDate().toString());
+                courseEndDate.setText(courseEntity.getEndDate().toString());
+                int position = getSpinnerPosition();
+                courseStatus.setSelection(position);
+                mentorName.setText(courseEntity.getMentorName());
+                mentorPhone.setText(courseEntity.getMentorPhone());
+                mentorEmail.setText(courseEntity.getMentorEmail());
+
+
+            }
+        });
+
+        Bundle extras = getIntent().getExtras();
+
+        //Check if Course is new or not, and set title of edit page accordingly
+        if (extras == null) {
+            setTitle("New course");
+            isNewCourse = true;
+
+        } else {
+            setTitle("Edit course");
+
+            int courseId = extras.getInt(COURSE_ID_KEY);
+            courseEditorViewModel.loadData(courseId);
+
+
+        }
+
+    }
+
+
+    private void initSpinner() {
+
+
+        List<CharSequence> courseStatusChoices = new ArrayList<>();
+
+        courseStatusChoices.add("In Progress");
+        courseStatusChoices.add("Complete");
+        courseStatusChoices.add("Next");
+
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseStatusChoices);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        courseStatus.setAdapter(adapter);
 
 
 
     }
 
+    private Object getSpinnerValue() {
+
+        return courseStatus.getSelectedItem();
+    }
+
+    private int getSpinnerPosition() {
+
+        return adapter.getPosition(position);
+
+
+    }
+
+
+
+
+
     private void saveAndReturn() {
 
-        courseEditorViewModel.saveCourse(courseTitle.getText().toString(), new Date(courseStartDate.getText().toString()), new Date(courseEndDate.getText().toString()), courseStatus, mentorName.getText().toString(), mentorPhone.getText().toString(), mentorEmail.getText().toString(), termTitle);
+        int i = (int) getSpinnerPosition();
+
+
+        try {
+            Date startDate = TextFormatter.fullDateFormat.parse(courseStartDate.getText().toString());
+            Date endDate = TextFormatter.fullDateFormat.parse(courseEndDate.getText().toString());
+
+            courseEditorViewModel.saveCourse(courseTitle.getText().toString(), startDate, endDate, i, mentorName.getText().toString(), mentorPhone.getText().toString(), mentorEmail.getText().toString(), termTitle);
+
+            finish();
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
 
@@ -124,5 +236,11 @@ public class CourseEditorActivity extends AppCompatActivity {
         outState.putBoolean(EDITING_KEY, true);
         super.onSaveInstanceState(outState);
     }
+
+    @OnClick(R.id.course_save_button)
+    void saveButtonClickHandler() {
+        saveAndReturn();
+    }
+
 
 }
