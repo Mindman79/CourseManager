@@ -82,12 +82,16 @@ public class TermEditorActivity extends AppCompatActivity {
 
         }
 
-        //Initialize the ViewModels
-        initTermViewModel();
-        initCourseViewModel();
 
         //Initialize the course RecyclerView
         initRecyclerView();
+
+        //Initialize the ViewModels
+
+        initTermViewModel();
+        initCourseViewModel();
+
+
 
     }
 
@@ -153,8 +157,6 @@ public class TermEditorActivity extends AppCompatActivity {
                 if (termEntity != null && !isEditing)
 
 
-
-                    //TODO: Add the rest of the fields here
                     termTitle.setText(termEntity.getTitle());
                     termStartDate.setText(termEntity.getStartDate().toString());
                     termEndDate.setText(termEntity.getEndDate().toString());
@@ -173,7 +175,6 @@ public class TermEditorActivity extends AppCompatActivity {
         } else {
             setTitle("Edit term");
 
-            //TODO: Add other fields here (maybe)
             int termId = extras.getInt(TERM_ID_KEY);
             termViewModel.loadData(termId);
 
@@ -256,7 +257,7 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
-    //TODO: Change this to course editor activity
+
     @OnClick(R.id.add_course_button)
     void fabClickHandler() {
         Intent intent = new Intent(this, CourseEditorActivity.class);

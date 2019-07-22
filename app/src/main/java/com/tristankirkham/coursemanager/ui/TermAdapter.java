@@ -23,7 +23,6 @@ import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
-
     private final List<TermEntity> termList;
     private final Context termContext;
 
@@ -36,6 +35,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
 

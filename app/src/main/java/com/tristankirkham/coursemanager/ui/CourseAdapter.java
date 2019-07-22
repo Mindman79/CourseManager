@@ -1,14 +1,18 @@
 package com.tristankirkham.coursemanager.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tristankirkham.coursemanager.CourseEditorActivity;
 import com.tristankirkham.coursemanager.R;
+import com.tristankirkham.coursemanager.TermEditorActivity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
 
@@ -16,6 +20,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
+import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -50,11 +57,23 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         final CourseEntity course = coursesList.get(position);
 
 
-        //TODO: Add the other fields
+        //TODO: Add any other fields that needs to be visible in the recyclerview columns
         holder.course_title.setText(course.getCourseName());
 
-        //TODO: Add FAB click listener
 
+
+
+        //Set edit FAB click listener
+        holder.course_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(coursesContext, CourseEditorActivity.class);
+                intent.putExtra(COURSE_ID_KEY, course.getCourse_id());
+                coursesContext.startActivity(intent);
+
+            }
+        });
 
     }
 
@@ -68,6 +87,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         @BindView(R.id.course_title)
         TextView course_title;
+
+        @BindView(R.id.course_fab)
+        FloatingActionButton course_fab;
 
         public ViewHolder(View itemView) {
             super(itemView);

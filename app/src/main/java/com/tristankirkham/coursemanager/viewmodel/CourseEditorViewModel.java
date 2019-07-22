@@ -36,6 +36,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
                              public void run() {
 
                                  CourseEntity course = courseRepository.getCourseByID(course_id);
+                                 courseLiveData.postValue(course);
 
                              }
                          }
@@ -62,6 +63,10 @@ public class CourseEditorViewModel extends AndroidViewModel {
           course.setCourseName(courseName.trim());
           course.setStartDate(startDate);
           course.setEndDate(endDate);
+          course.setStatus(status);
+          course.setMentorName(mentorName);
+          course.setMentorPhone(mentorPhone);
+          course.setMentorEmail(mentorEmail);
 
       }
       courseRepository.insertCourse(course);

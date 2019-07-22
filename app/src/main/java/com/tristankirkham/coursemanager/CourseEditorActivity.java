@@ -3,16 +3,20 @@ package com.tristankirkham.coursemanager;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
@@ -26,6 +30,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindInt;
 import butterknife.BindView;
@@ -40,6 +45,8 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     private CourseEditorViewModel courseEditorViewModel;
     private boolean isNewCourse, isEditing;
+
+    Object courseEntity = new Object();
 
     private ArrayAdapter<CharSequence> adapter;
 
@@ -103,12 +110,17 @@ public class CourseEditorActivity extends AppCompatActivity {
     private void initCourseViewModel() {
 
 
+
         courseEditorViewModel = ViewModelProviders.of(this).get(CourseEditorViewModel.class);
         courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
             @Override
-            public void onChanged(@Nullable CourseEntity courseEntity) {
+            public void onChanged(@NonNull CourseEntity courseEntity) {
+
+
+
 
                 if (courseEntity != null && !isEditing)
+
 
                     courseTitle.setText(courseEntity.getCourseName());
                 courseStartDate.setText(courseEntity.getStartDate().toString());
@@ -129,12 +141,16 @@ public class CourseEditorActivity extends AppCompatActivity {
         if (extras == null) {
             setTitle("New course");
             isNewCourse = true;
+            Toast.makeText(this, "Course data blank", Toast.LENGTH_LONG).show();
 
         } else {
             setTitle("Edit course");
+            Toast.makeText(this, "Course data is NOT blank", Toast.LENGTH_LONG).show();
 
-            int courseId = extras.getInt(COURSE_ID_KEY);
+
+       int courseId = extras.getInt(COURSE_ID_KEY);
             courseEditorViewModel.loadData(courseId);
+
 
 
         }
@@ -184,7 +200,13 @@ public class CourseEditorActivity extends AppCompatActivity {
         int i = (int) getSpinnerPosition();
 
 
-        try {
+       courseEditorViewModel.saveCourse(courseTitle.getText().toString(), new Date(courseStartDate.getText().toString()), new Date(courseEndDate.getText().toString()), i, mentorName.getText().toString(), mentorPhone.getText().toString(), mentorEmail.getText().toString(), termTitle);
+
+        finish();
+
+
+
+        /*try {
             Date startDate = TextFormatter.fullDateFormat.parse(courseStartDate.getText().toString());
             Date endDate = TextFormatter.fullDateFormat.parse(courseEndDate.getText().toString());
 
@@ -196,7 +218,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
+*/
 
 
     }
@@ -242,5 +264,17 @@ public class CourseEditorActivity extends AppCompatActivity {
         saveAndReturn();
     }
 
+
+    //Add delete menu option
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!isNewCourse) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_term_editor, menu);
+
+        }
+        return super.onCreateOptionsMenu(menu);
+
+    }
 
 }
