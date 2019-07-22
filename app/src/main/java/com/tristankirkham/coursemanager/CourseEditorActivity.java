@@ -200,13 +200,27 @@ public class CourseEditorActivity extends AppCompatActivity {
         int i = (int) getSpinnerPosition();
         String courseTitle = courseTitleView.getText().toString();
 
+        if(courseTitle != null && !courseTitle.isEmpty()) {
+
+            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), i, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), termTitle);
+
+            finish();
+
+
+
+        } else {
+
+            Toast.makeText(this, "Data has NOT been entered, returning to previous screen", Toast.LENGTH_SHORT).show();
+
+            finish();
+
+
+        }
 
 
 
 
-       courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), i, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), termTitle);
 
-        finish();
 
 
 
