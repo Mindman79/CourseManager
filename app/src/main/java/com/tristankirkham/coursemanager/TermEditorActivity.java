@@ -17,8 +17,7 @@ import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
-import com.tristankirkham.coursemanager.ui.CourseAdapter;
-import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
+import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
 import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 

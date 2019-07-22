@@ -12,9 +12,10 @@ import java.util.concurrent.Executors;
 public class AppRepository {
     private static AppRepository ourInstance;
 
-    //TODO: Add other entities?
+
     public LiveData<List<TermEntity>> termList;
     public LiveData<List<CourseEntity>> courseList;
+    public LiveData<List<AssessmentEntity>> assessmentList;
     private AppDatabase Db;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -30,15 +31,12 @@ public class AppRepository {
         Db = AppDatabase.getInstance(context);
         termList = getAllTerms();
         courseList = getAllCourses();
+        assessmentList = getAllAssessments();
 
 
     }
 
-    private LiveData<List<CourseEntity>> getAllCourses() {
-        return Db.courseDao().getAllCourses();
 
-
-    }
 
     public void addSampleData() {
         executor.execute(new Runnable() {
@@ -52,6 +50,8 @@ public class AppRepository {
 
     }
 
+
+    //Term
     //Method where we determine where the data is coming from
     private LiveData<List<TermEntity>> getAllTerms() {
         return Db.termDao().getAll();
@@ -95,6 +95,14 @@ public class AppRepository {
 
     }
 
+    //Course
+
+    private LiveData<List<CourseEntity>> getAllCourses() {
+        return Db.courseDao().getAllCourses();
+
+
+    }
+
     public CourseEntity getCourseByID(int course_id) {
 
         return Db.courseDao().getCourseById(course_id);
@@ -122,4 +130,41 @@ public class AppRepository {
         });
 
     }
+
+
+    //Assessment
+
+    private LiveData<List<AssessmentEntity>> getAllAssessments() {
+        return Db.assessmentDao().getAllAssessments();
+    }
+
+    public AssessmentEntity getAssessmentById(int assessmentId) {
+
+        return Db.assessmentDao().getAssessmentById(assessmentId);
+
+    }
+
+
+    public void insertAssessment(final AssessmentEntity assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Db.assessmentDao().insertAssessment(assessment);
+            }
+        });
+
+    }
+
+    public void deleteAssessment(final AssessmentEntity value) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Db.assessmentDao().deleteAssessment(value);
+            }
+        });
+
+    }
+
+
 }

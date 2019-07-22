@@ -10,69 +10,68 @@ import java.util.Date;
 public class AssessmentEntity {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
-    private String name;
-    private String type;
-    private Date date;
+    private int assessmentId;
+    private String assessmentName;
+    private int assessmentType;
+    private Date assessmentDate;
     private int courseId;
 
-    //private SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
 
 
 
-    //Set assessment items individually
+
+
     @Ignore
     public AssessmentEntity() {
     }
 
-    //Create new assessment
-    public AssessmentEntity(int id, String name, String type, Date date, int courseId) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.date = date;
+    public AssessmentEntity(int assessmentId, String assessmentName, int assessmentType, Date assessmentDate, int courseId) {
+        this.assessmentId = assessmentId;
+        this.assessmentName = assessmentName;
+        this.assessmentType = assessmentType;
+        this.assessmentDate = assessmentDate;
         this.courseId = courseId;
     }
 
-    //Edit existing assessment
+
     @Ignore
-    public AssessmentEntity(String name, String type, Date date) {
-        this.name = name;
-        this.type = type;
-        this.date = date;
+    public AssessmentEntity(String assessmentName, int assessmentType, Date assessmentDate) {
+        this.assessmentName = assessmentName;
+        this.assessmentType = assessmentType;
+        this.assessmentDate = assessmentDate;
     }
 
 
-    public int getId() {
-        return id;
+    public int getAssessmentId() {
+        return assessmentId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAssessmentId(int assessmentId) {
+        this.assessmentId = assessmentId;
     }
 
-    public String getName() {
-        return name;
+    public String getAssessmentName() {
+        return assessmentName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAssessmentName(String assessmentName) {
+        this.assessmentName = assessmentName;
     }
 
-    public String getType() {
-        return type;
+    public int getAssessmentType() {
+        return assessmentType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setAssessmentType(int assessmentType) {
+        this.assessmentType = assessmentType;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getAssessmentDate() {
+        return assessmentDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setAssessmentDate(Date assessmentDate) {
+        this.assessmentDate = assessmentDate;
     }
 
     public int getCourseId() {
@@ -86,10 +85,10 @@ public class AssessmentEntity {
     @Override
     public String toString() {
         return "AssessmentEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                ", date='" + date + '\'' +
+                "assessmentId=" + assessmentId +
+                ", assessmentName='" + assessmentName + '\'' +
+                ", assessmentType=" + assessmentType +
+                ", assessmentDate=" + assessmentDate +
                 ", courseId=" + courseId +
                 '}';
     }

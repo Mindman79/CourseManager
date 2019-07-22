@@ -1,4 +1,4 @@
-package com.tristankirkham.coursemanager.ui;
+package com.tristankirkham.coursemanager.recyclerview_adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import com.tristankirkham.coursemanager.CourseEditorActivity;
 import com.tristankirkham.coursemanager.R;
-import com.tristankirkham.coursemanager.TermEditorActivity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
-import com.tristankirkham.coursemanager.database.TermEntity;
 
 import java.util.List;
 
@@ -22,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
-import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 

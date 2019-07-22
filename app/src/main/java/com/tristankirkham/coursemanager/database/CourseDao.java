@@ -18,7 +18,7 @@ public interface CourseDao {
 
     //Insert all courses
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void InsertAllCourses(List<CourseEntity> course);
+    public void InsertAllCourses(List<CourseEntity> courses);
 
     //Get a course by ID
     @Query("SELECT * FROM course WHERE course_id = :course_id")

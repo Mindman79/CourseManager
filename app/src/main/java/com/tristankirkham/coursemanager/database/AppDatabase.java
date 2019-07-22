@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, exportSchema = false, version = 5)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, exportSchema = false, version = 6)
 
 @TypeConverters(DateConverter.class)
 
@@ -18,6 +18,7 @@ public abstract class AppDatabase extends RoomDatabase {
     //TODO add all the rest of the Daos when they exist
     public abstract TermDao termDao();
     public abstract CourseDao courseDao();
+    public abstract AssessmentDao assessmentDao();
 
 
     //Get instance of DB, confirm it's not null, and then build it

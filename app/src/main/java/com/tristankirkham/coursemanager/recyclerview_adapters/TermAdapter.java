@@ -1,4 +1,4 @@
-package com.tristankirkham.coursemanager.ui;
+package com.tristankirkham.coursemanager.recyclerview_adapters;
 
 import android.content.Context;
 import android.content.Intent;

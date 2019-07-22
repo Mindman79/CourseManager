@@ -24,6 +24,8 @@
     <string name="title_activity_course_editor">CourseEditorActivity</string>
 
 
+    <string name="title_activity_assessment_editor">AssessmentEditorActivity</string>
+    <string name="action_settings">Settings</string>
     <string-array name="course_status">
 
         <item>In Progress</item>
@@ -32,7 +34,6 @@
 
 
     </string-array>
-
 
 
 </resources>

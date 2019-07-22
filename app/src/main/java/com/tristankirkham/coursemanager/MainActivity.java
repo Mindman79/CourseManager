@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.tristankirkham.coursemanager.database.TermEntity;
-import com.tristankirkham.coursemanager.ui.TermAdapter;
+import com.tristankirkham.coursemanager.recyclerview_adapters.TermAdapter;
 import com.tristankirkham.coursemanager.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
