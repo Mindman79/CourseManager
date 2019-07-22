@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
@@ -37,13 +38,13 @@ public class TermEditorActivity extends AppCompatActivity {
 
     //Bind views
     @BindView(R.id.term_title)
-    TextView termTitle;
+    TextView termTitleView;
 
     @BindView(R.id.term_start_date)
-    TextView termStartDate;
+    TextView termStartDateView;
 
     @BindView(R.id.term_end_date)
-    TextView termEndDate;
+    TextView termEndDateView;
 
     //Course RecyclerView
     @BindView(R.id.course_recyclerview)
@@ -157,9 +158,9 @@ public class TermEditorActivity extends AppCompatActivity {
                 if (termEntity != null && !isEditing)
 
 
-                    termTitle.setText(termEntity.getTitle());
-                    termStartDate.setText(termEntity.getStartDate().toString());
-                    termEndDate.setText(termEntity.getEndDate().toString());
+                    termTitleView.setText(termEntity.getTitle());
+                    termStartDateView.setText(termEntity.getStartDate().toString());
+                    termEndDateView.setText(termEntity.getEndDate().toString());
 
 
             }
@@ -217,21 +218,38 @@ public class TermEditorActivity extends AppCompatActivity {
     //Handles saves from the device back button
     @Override
     public void onBackPressed() {
+
+
         super.onBackPressed();
-        saveAndReturn();
+
+
+
+            saveAndReturn();
+
+
+
+
+
+
     }
 
     private void saveAndReturn() {
 
 
+        String termTitle = termTitleView.getText().toString();
+        if(termTitle != null && !termTitle.isEmpty()) {
+
+            termViewModel.saveTerm(termTitle, new Date(termStartDateView.getText().toString()), new Date(termEndDateView.getText().toString()));
 
 
-        termViewModel.saveTerm(termTitle.getText().toString(), new Date(termStartDate.getText().toString()), new Date(termEndDate.getText().toString()));
+            finish();
 
+        } else {
 
-        finish();
+            Toast.makeText(this, "Data has NOT been entered, returning to previous screen", Toast.LENGTH_SHORT).show();
 
-
+            finish();
+        }
 
 
 
@@ -261,7 +279,7 @@ public class TermEditorActivity extends AppCompatActivity {
     @OnClick(R.id.add_course_button)
     void fabClickHandler() {
         Intent intent = new Intent(this, CourseEditorActivity.class);
-        intent.putExtra("term_title", String.valueOf(termTitle));
+        intent.putExtra("term_title", String.valueOf(termTitleView));
         startActivity(intent);
     }
 

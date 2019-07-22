@@ -56,25 +56,25 @@ public class CourseEditorActivity extends AppCompatActivity {
 
 
     @BindView(R.id.course_title)
-    TextView courseTitle;
+    TextView courseTitleView;
 
     @BindView(R.id.course_start_date)
-    TextView courseStartDate;
+    TextView courseStartDateView;
 
     @BindView(R.id.course_end_date)
-    TextView courseEndDate;
+    TextView courseEndDateView;
 
     @BindView(R.id.course_status)
-    Spinner courseStatus;
+    Spinner courseStatusView;
 
     @BindView(R.id.course_mentor_name)
-    TextView mentorName;
+    TextView mentorNameView;
 
     @BindView(R.id.course_mentor_phone)
-    TextView mentorPhone;
+    TextView mentorPhoneView;
 
     @BindView(R.id.course_mentor_email)
-    TextView mentorEmail;
+    TextView mentorEmailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,14 +122,14 @@ public class CourseEditorActivity extends AppCompatActivity {
                 if (courseEntity != null && !isEditing)
 
 
-                    courseTitle.setText(courseEntity.getCourseName());
-                courseStartDate.setText(courseEntity.getStartDate().toString());
-                courseEndDate.setText(courseEntity.getEndDate().toString());
+                    courseTitleView.setText(courseEntity.getCourseName());
+                courseStartDateView.setText(courseEntity.getStartDate().toString());
+                courseEndDateView.setText(courseEntity.getEndDate().toString());
                 int position = getSpinnerPosition();
-                courseStatus.setSelection(position);
-                mentorName.setText(courseEntity.getMentorName());
-                mentorPhone.setText(courseEntity.getMentorPhone());
-                mentorEmail.setText(courseEntity.getMentorEmail());
+                courseStatusView.setSelection(position);
+                mentorNameView.setText(courseEntity.getMentorName());
+                mentorPhoneView.setText(courseEntity.getMentorPhone());
+                mentorEmailView.setText(courseEntity.getMentorEmail());
 
 
             }
@@ -173,7 +173,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-        courseStatus.setAdapter(adapter);
+        courseStatusView.setAdapter(adapter);
 
 
 
@@ -181,7 +181,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     private Object getSpinnerValue() {
 
-        return courseStatus.getSelectedItem();
+        return courseStatusView.getSelectedItem();
     }
 
     private int getSpinnerPosition() {
@@ -198,9 +198,13 @@ public class CourseEditorActivity extends AppCompatActivity {
     private void saveAndReturn() {
 
         int i = (int) getSpinnerPosition();
+        String courseTitle = courseTitleView.getText().toString();
 
 
-       courseEditorViewModel.saveCourse(courseTitle.getText().toString(), new Date(courseStartDate.getText().toString()), new Date(courseEndDate.getText().toString()), i, mentorName.getText().toString(), mentorPhone.getText().toString(), mentorEmail.getText().toString(), termTitle);
+
+
+
+       courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), i, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), termTitle);
 
         finish();
 
