@@ -63,7 +63,7 @@ public class CourseEntity {
 
     //Set course items individually
     @Ignore
-    public CourseEntity() {
+    public CourseEntity(int i, String test, Date date, Date date1, int i1, String yo_mom, String mentorEmail, String termTitle) {
     }
 
 

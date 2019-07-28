@@ -16,9 +16,9 @@ public interface TermDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertTerm(TermEntity termEntity);
 
-    //Insert all term
+    //Insert all terms from an ArrayList
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<TermEntity> terms);
+    void insertAllTerms(List<TermEntity> terms);
 
     //Delete a term
     @Delete

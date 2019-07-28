@@ -42,7 +42,8 @@ public class AppRepository {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                Db.termDao().insertAll(SampleData.getTerms());
+                Db.courseDao().InsertAllCourses(SampleData.getCourses());
+                Db.termDao().insertAllTerms(SampleData.getTerms());
             }
         });
 

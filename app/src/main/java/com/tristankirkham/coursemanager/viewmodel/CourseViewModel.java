@@ -24,5 +24,7 @@ public class CourseViewModel extends AndroidViewModel {
         repository = AppRepository.getInstance(application.getApplicationContext());
         courseList = repository.courseList;
 
+
+
     }
 }

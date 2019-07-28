@@ -89,7 +89,7 @@ public class TermEditorActivity extends AppCompatActivity {
         //Initialize the ViewModels
 
         initTermViewModel();
-        initCourseViewModel();
+        //initCourseViewModel();
 
 
 

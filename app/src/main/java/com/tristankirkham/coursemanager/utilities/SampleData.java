@@ -1,5 +1,6 @@
 package com.tristankirkham.coursemanager.utilities;
 
+import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
 
 import java.util.ArrayList;
@@ -33,6 +34,15 @@ public class SampleData {
         terms.add(new TermEntity(2, "Summer Term", getDate(2), getDate(3) ));
         terms.add(new TermEntity(3, "Fall Term", getDate(4), getDate(5) ));
         return terms;
+    }
+
+
+    public static List<CourseEntity> getCourses() {
+        List<CourseEntity> courses = new ArrayList<>();
+        courses.add(new CourseEntity(1, "Programming", getDate(1), getDate(2), 3, "Yo mom", "801-725-1204", "mindman79@hotmail.com", "Test" ));
+        return courses;
+
+
     }
 
 }
