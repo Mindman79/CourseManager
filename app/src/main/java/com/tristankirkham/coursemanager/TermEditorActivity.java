@@ -89,7 +89,7 @@ public class TermEditorActivity extends AppCompatActivity {
         //Initialize the ViewModels
 
         initTermViewModel();
-        //initCourseViewModel();
+        initCourseViewModel();
 
 
 
@@ -278,7 +278,7 @@ public class TermEditorActivity extends AppCompatActivity {
     @OnClick(R.id.add_course_button)
     void fabClickHandler() {
         Intent intent = new Intent(this, CourseEditorActivity.class);
-        intent.putExtra("term_title", String.valueOf(termTitleView));
+        //intent.putExtra("term_title", String.valueOf(termTitleView));
         startActivity(intent);
     }
 

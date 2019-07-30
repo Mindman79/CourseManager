@@ -20,7 +20,6 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
 public class CourseEntity {
 
     @PrimaryKey(autoGenerate = true)
-
     private int course_id;
     private String courseName;
     private Date startDate;
@@ -29,11 +28,9 @@ public class CourseEntity {
     private String mentorName;
     private String mentorPhone;
     private String mentorEmail;
-    private String termTitle;
 
 
-    //Create new course
-    public CourseEntity(int course_id, String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, String termTitle) {
+    public CourseEntity(int course_id, String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail) {
         this.course_id = course_id;
         this.courseName = courseName;
         this.startDate = startDate;
@@ -42,12 +39,10 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.termTitle = termTitle;
     }
 
-    //Edit existing course
     @Ignore
-    public CourseEntity(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, String termTitle) {
+    public CourseEntity(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail) {
         this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -55,15 +50,10 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
-        this.termTitle = termTitle;
     }
 
-
-
-
-    //Set course items individually
     @Ignore
-    public CourseEntity(int i, String test, Date date, Date date1, int i1, String yo_mom, String mentorEmail, String termTitle) {
+    public CourseEntity() {
     }
 
 
@@ -130,31 +120,4 @@ public class CourseEntity {
     public void setMentorEmail(String mentorEmail) {
         this.mentorEmail = mentorEmail;
     }
-
-    public String getTermTitle() {
-        return termTitle;
-    }
-
-    public void setTermTitle(String termTitle) {
-        this.termTitle = termTitle;
-    }
-
-    @Override
-    public String toString() {
-        return "CourseEntity{" +
-                "id=" + course_id +
-                ", startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                ", status=" + status +
-                ", mentorName='" + mentorName + '\'' +
-                ", mentorPhone='" + mentorPhone + '\'' +
-                ", mentorEmail='" + mentorEmail + '\'' +
-                ", termTitle=" + termTitle +
-                '}';
-    }
-
-
-
-
-
 }
