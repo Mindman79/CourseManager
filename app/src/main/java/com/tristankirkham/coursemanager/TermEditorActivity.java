@@ -70,6 +70,7 @@ public class TermEditorActivity extends AppCompatActivity {
     private CourseViewModel courseViewModel;
 
     private ArrayAdapter<CourseEntity> dataAdapter;
+    private ArrayAdapter<CharSequence> adapter;
 
 
     @Override
@@ -96,7 +97,7 @@ public class TermEditorActivity extends AppCompatActivity {
 
         initRecyclerView();
         initTermViewModel();
-        initCourseViewModel();
+        initCourseObserver();
         initSpinner();
 
 
@@ -122,21 +123,35 @@ public class TermEditorActivity extends AppCompatActivity {
 
     private void initSpinner() {
 
+
+        /*List<CharSequence> courseStatusChoices = new ArrayList<>();
+
+        courseStatusChoices.add("In Progress");
+        courseStatusChoices.add("Complete");
+        courseStatusChoices.add("Next");
+
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseStatusChoices);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+        courseSelector.setAdapter(adapter);
+*/
+
         ArrayList<CourseEntity> availableCourses = new ArrayList<>();
         for (CourseEntity e : courseData) {
 
 
             availableCourses.add(e);
-            System.out.println(e);
 
 
-            // Creating adapter for spinner
-            ArrayAdapter<CourseEntity> dataAdapter = new ArrayAdapter<CourseEntity>(this, android.R.layout.simple_spinner_item, availableCourses);
+            dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, availableCourses);
 
-            // Drop down layout style - list view with radio button
+
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            // attaching data adapter to spinner
+
             courseSelector.setAdapter(dataAdapter);
 
 
@@ -146,7 +161,9 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
 
-    private void initCourseViewModel() {
+
+
+    private void initCourseObserver() {
 
         final Observer<List<CourseEntity>> courseObserver = new Observer<List<CourseEntity>>() {
             @Override
