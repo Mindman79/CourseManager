@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.widget.Spinner;
 
 import com.tristankirkham.coursemanager.database.AppRepository;
 import com.tristankirkham.coursemanager.database.TermEntity;
@@ -18,6 +19,7 @@ public class TermEditorViewModel extends AndroidViewModel {
     public MutableLiveData<TermEntity> tLiveTerm = new MutableLiveData<>();
     private AppRepository tRepository = AppRepository.getInstance(getApplication());
     private Executor executor = Executors.newSingleThreadExecutor();
+
 
     public TermEditorViewModel(@NonNull Application application) {
         super(application);

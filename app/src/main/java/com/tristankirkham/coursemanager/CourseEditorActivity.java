@@ -46,7 +46,6 @@ public class CourseEditorActivity extends AppCompatActivity {
     private CourseEditorViewModel courseEditorViewModel;
     private boolean isNewCourse, isEditing;
 
-    Object courseEntity = new Object();
 
     private ArrayAdapter<CharSequence> adapter;
 
@@ -82,7 +81,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String termTitle = getIntent().getStringExtra("term_title");
+        //String termTitle = getIntent().getStringExtra("term_title");
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -198,8 +197,10 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     private void saveAndReturn() {
 
-        String courseTitle = courseTitleView.getText().toString();
-        Date startDate = null;
+       String courseTitle = courseTitleView.getText().toString();
+        int status = getSpinnerPosition();
+
+        /*Date startDate = null;
         try {
             startDate = TextFormatter.fullDateFormat.parse(courseStartDateView.getText().toString());
         } catch (ParseException e) {
@@ -211,16 +212,16 @@ public class CourseEditorActivity extends AppCompatActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        int status = getSpinnerPosition();
+
         String mentorName = mentorNameView.getText().toString();
         String mentorPhone = mentorPhoneView.getText().toString();
-        String mentorEmail = mentorEmailView.getText().toString();
+        String mentorEmail = mentorEmailView.getText().toString();*/
 
         if (courseTitle != null && !courseTitle.isEmpty()) {
 
-            /*courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), i, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString());*/
+            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString());
 
-            courseEditorViewModel.saveCourse(courseTitle, startDate, endDate, status, mentorName, mentorPhone, mentorEmail);
+            //courseEditorViewModel.saveCourse(courseTitle, startDate, endDate, status, mentorName, mentorPhone, mentorEmail);
 
             finish();
 

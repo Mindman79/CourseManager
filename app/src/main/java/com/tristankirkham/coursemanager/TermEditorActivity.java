@@ -12,6 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,11 +27,13 @@ import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
@@ -49,6 +55,9 @@ public class TermEditorActivity extends AppCompatActivity {
     @BindView(R.id.course_recyclerview)
     RecyclerView courseRecyclerView;
 
+    @BindView(R.id.courseSelector)
+    Spinner courseSelector;
+
 
     //Register ViewModel
     private TermEditorViewModel termViewModel;
@@ -59,6 +68,8 @@ public class TermEditorActivity extends AppCompatActivity {
 
     private List<CourseEntity> courseData = new ArrayList<>();
     private CourseViewModel courseViewModel;
+
+    private ArrayAdapter<CourseEntity> dataAdapter;
 
 
     @Override
@@ -83,17 +94,57 @@ public class TermEditorActivity extends AppCompatActivity {
         }
 
 
-        //Initialize the course RecyclerView
         initRecyclerView();
-
-        //Initialize the ViewModels
-
         initTermViewModel();
         initCourseViewModel();
+        initSpinner();
+
+
+    }
+
+
+
+    @OnItemSelected(R.id.courseSelector)
+    public void initCourseSelectorSpinner(int position) {
+
+        courseSelector.getItemAtPosition(position);
+
 
 
 
     }
+
+    private Object getSpinnerObject() {
+
+
+        return courseSelector.getSelectedItem().toString();
+    }
+
+    private void initSpinner() {
+
+        ArrayList<CourseEntity> availableCourses = new ArrayList<>();
+        for (CourseEntity e : courseData) {
+
+
+            availableCourses.add(e);
+            System.out.println(e);
+
+
+            // Creating adapter for spinner
+            ArrayAdapter<CourseEntity> dataAdapter = new ArrayAdapter<CourseEntity>(this, android.R.layout.simple_spinner_item, availableCourses);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            courseSelector.setAdapter(dataAdapter);
+
+
+        }
+    }
+
+
+
 
     private void initCourseViewModel() {
 
@@ -120,15 +171,7 @@ public class TermEditorActivity extends AppCompatActivity {
         courseViewModel.courseList.observe(this, courseObserver);
 
 
-
     }
-
-
-
-
-
-
-
 
 
     private void initRecyclerView() {
@@ -141,7 +184,6 @@ public class TermEditorActivity extends AppCompatActivity {
 
         //Pass in layoutmanager
         courseRecyclerView.setLayoutManager(layoutManager);
-
 
 
     }
@@ -158,8 +200,8 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
                     termTitleView.setText(termEntity.getTitle());
-                    termStartDateView.setText(termEntity.getStartDate().toString());
-                    termEndDateView.setText(termEntity.getEndDate().toString());
+                termStartDateView.setText(termEntity.getStartDate().toString());
+                termEndDateView.setText(termEntity.getEndDate().toString());
 
 
             }
@@ -222,12 +264,7 @@ public class TermEditorActivity extends AppCompatActivity {
         super.onBackPressed();
 
 
-
-            saveAndReturn();
-
-
-
-
+        saveAndReturn();
 
 
     }
@@ -236,7 +273,7 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
         String termTitle = termTitleView.getText().toString();
-        if(termTitle != null && !termTitle.isEmpty()) {
+        if (termTitle != null && !termTitle.isEmpty()) {
 
             termViewModel.saveTerm(termTitle, new Date(termStartDateView.getText().toString()), new Date(termEndDateView.getText().toString()));
 
@@ -251,12 +288,7 @@ public class TermEditorActivity extends AppCompatActivity {
         }
 
 
-
     }
-
-
-
-
 
 
     //Save date when device changes orientation
@@ -267,12 +299,10 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
-
     @OnClick(R.id.save_button)
     void saveButtonClickHandler() {
         saveAndReturn();
     }
-
 
 
     @OnClick(R.id.add_course_button)
@@ -281,8 +311,6 @@ public class TermEditorActivity extends AppCompatActivity {
         //intent.putExtra("term_title", String.valueOf(termTitleView));
         startActivity(intent);
     }
-
-
 
 
 }

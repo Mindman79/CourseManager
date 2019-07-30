@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
 
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="108dp"
         android:text="Save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/term_end_date" />
@@ -73,14 +73,14 @@
         app:layout_constraintTop_toBottomOf="@+id/save_button" />
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="229dp"
-        android:layout_height="248dp"
+        android:layout_width="118dp"
+        android:layout_height="102dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toEndOf="@+id/add_course_button"
         app:layout_constraintTop_toBottomOf="@+id/term_end_date"
-        app:layout_constraintVertical_bias="0.176" >
+        app:layout_constraintVertical_bias="0.176">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/course_recyclerview"
@@ -91,10 +91,24 @@
             android:focusableInTouchMode="true"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>
+
+    <Spinner
+        android:id="@+id/courseSelector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="22dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintTop_toBottomOf="@+id/term_end_date"
+        tools:layout_editor_absoluteX="8dp" />
 
 
 </android.support.constraint.ConstraintLayout>
