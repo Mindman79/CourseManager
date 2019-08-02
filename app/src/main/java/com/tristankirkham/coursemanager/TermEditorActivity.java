@@ -76,6 +76,8 @@ public class TermEditorActivity extends AppCompatActivity {
     private ArrayAdapter<CourseEntity> dataAdapter;
     private ArrayAdapter<CharSequence> adapter;
 
+    private int termId;
+
 
 
 
@@ -179,11 +181,11 @@ public class TermEditorActivity extends AppCompatActivity {
                 courseData.clear();
 
                 //TODO: finish this
-                /*for (CourseEntity c : courseEntities)
-                    if (c.getTerm_id() == TERM_ID_KEY)
-                        courseData.add(t);*/
+                for (CourseEntity c : courseEntities)
+                    if (c.getTerm_id() == termId)
+                        courseData.add(c);
 
-                courseData.addAll(courseEntities);
+                //courseData.addAll(courseEntities);
 
                 if (courseAdapter == null) {
                     courseAdapter = new CourseAdapter(courseData, TermEditorActivity.this);
@@ -248,7 +250,7 @@ public class TermEditorActivity extends AppCompatActivity {
         } else {
             setTitle("Edit term");
 
-            int termId = extras.getInt(TERM_ID_KEY);
+            termId = extras.getInt(TERM_ID_KEY);
             termEditorViewModel.loadData(termId);
 
 
@@ -353,7 +355,7 @@ public class TermEditorActivity extends AppCompatActivity {
 
             //int termId = test.getInt(TERM_ID_KEY);
 
-            //intent.putExtra(TERM_ID_KEY, termId);
+            intent.putExtra(TERM_ID_KEY, termId);
 
         }
 
