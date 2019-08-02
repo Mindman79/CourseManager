@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
-@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, exportSchema = false, version = 7)
+@Database(entities = {TermEntity.class, CourseEntity.class, AssessmentEntity.class}, exportSchema = false, version = 8)
 
 @TypeConverters(DateConverter.class)
 

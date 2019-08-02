@@ -72,8 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<TermEntity> termEntities) {
                 termData.clear();
-                //for (TermEntity t : termEntities)
-                //if (t.getId() == termId).termData.add(t);
+
 
                 termData.addAll(termEntities);
 

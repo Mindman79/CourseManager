@@ -46,11 +46,13 @@ public class CourseEditorActivity extends AppCompatActivity {
     private CourseEditorViewModel courseEditorViewModel;
     private boolean isNewCourse, isEditing;
 
+    private List<CourseEntity> courseData = new ArrayList<>();
 
     private ArrayAdapter<CharSequence> adapter;
 
 
     private CharSequence position;
+    private int term_id;
 
 
     @BindView(R.id.course_title)
@@ -143,13 +145,20 @@ public class CourseEditorActivity extends AppCompatActivity {
             isNewCourse = true;
             Toast.makeText(this, "Course data blank", Toast.LENGTH_LONG).show();
 
+        } else if ( extras.containsKey(TERM_ID_KEY)) {
+            term_id = extras.getInt(TERM_ID_KEY);
+            setTitle("New course");
+            Toast.makeText(this, "Course data contains Term key", Toast.LENGTH_LONG).show();
+
+
         } else {
             setTitle("Edit course");
             Toast.makeText(this, "Course data is NOT blank", Toast.LENGTH_LONG).show();
-
-
-       int courseId = extras.getInt(COURSE_ID_KEY);
+            int courseId = extras.getInt(COURSE_ID_KEY);
             courseEditorViewModel.loadData(courseId);
+
+
+
 
 
 
@@ -219,7 +228,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         if (courseTitle != null && !courseTitle.isEmpty()) {
 
-            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString());
+            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), term_id);
 
             //courseEditorViewModel.saveCourse(courseTitle, startDate, endDate, status, mentorName, mentorPhone, mentorEmail);
 

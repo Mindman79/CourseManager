@@ -111,6 +111,12 @@ public class AppRepository {
     }
 
 
+    public LiveData<List<CourseEntity>> getAssociatedTerm(int term_id) {
+
+        return Db.courseDao().getAssociatedTerm(term_id);
+
+    }
+
     public void insertCourse(final CourseEntity course) {
         executor.execute(new Runnable() {
             @Override

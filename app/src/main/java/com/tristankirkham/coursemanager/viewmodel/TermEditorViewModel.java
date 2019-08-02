@@ -71,4 +71,12 @@ public class TermEditorViewModel extends AndroidViewModel {
         tRepository.deleteTerm(tLiveTerm.getValue());
 
     }
-}
+
+    public void getAssociatedTerm(int term_id) {
+        tRepository.getAssociatedTerm(term_id);
+
+
+
+
+    }
+ }

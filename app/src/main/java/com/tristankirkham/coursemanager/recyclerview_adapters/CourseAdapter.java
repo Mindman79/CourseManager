@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
+import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -67,6 +68,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
                 Intent intent = new Intent(coursesContext, CourseEditorActivity.class);
                 intent.putExtra(COURSE_ID_KEY, course.getCourse_id());
+
+
                 coursesContext.startActivity(intent);
 
             }

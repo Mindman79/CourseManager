@@ -24,6 +24,7 @@ import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
 import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
+import com.tristankirkham.coursemanager.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,8 @@ import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class TermEditorActivity extends AppCompatActivity {
+
+
 
 
     //Bind views
@@ -60,17 +63,22 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
     //Register ViewModel
-    private TermEditorViewModel termViewModel;
+    private TermEditorViewModel termEditorViewModel;
     private boolean isNewTerm, isEditing;
 
     //New instance of CourseAdapter
     private CourseAdapter courseAdapter;
 
     private List<CourseEntity> courseData = new ArrayList<>();
+    private List<TermEntity> termData = new ArrayList<>();
     private CourseViewModel courseViewModel;
 
     private ArrayAdapter<CourseEntity> dataAdapter;
     private ArrayAdapter<CharSequence> adapter;
+
+
+
+
 
 
     @Override
@@ -169,6 +177,12 @@ public class TermEditorActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<CourseEntity> courseEntities) {
                 courseData.clear();
+
+                //TODO: finish this
+                /*for (CourseEntity c : courseEntities)
+                    if (c.getTerm_id() == TERM_ID_KEY)
+                        courseData.add(t);*/
+
                 courseData.addAll(courseEntities);
 
                 if (courseAdapter == null) {
@@ -208,8 +222,8 @@ public class TermEditorActivity extends AppCompatActivity {
     //Initialize ViewModel
     private void initTermViewModel() {
 
-        termViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
-        termViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
+        termEditorViewModel = ViewModelProviders.of(this).get(TermEditorViewModel.class);
+        termEditorViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
             @Override
             public void onChanged(@Nullable TermEntity termEntity) {
 
@@ -235,7 +249,9 @@ public class TermEditorActivity extends AppCompatActivity {
             setTitle("Edit term");
 
             int termId = extras.getInt(TERM_ID_KEY);
-            termViewModel.loadData(termId);
+            termEditorViewModel.loadData(termId);
+
+
 
 
         }
@@ -263,7 +279,7 @@ public class TermEditorActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
 
-            termViewModel.deleteTerm();
+            termEditorViewModel.deleteTerm();
             finish();
 
 
@@ -292,7 +308,7 @@ public class TermEditorActivity extends AppCompatActivity {
         String termTitle = termTitleView.getText().toString();
         if (termTitle != null && !termTitle.isEmpty()) {
 
-            termViewModel.saveTerm(termTitle, new Date(termStartDateView.getText().toString()), new Date(termEndDateView.getText().toString()));
+            termEditorViewModel.saveTerm(termTitle, new Date(termStartDateView.getText().toString()), new Date(termEndDateView.getText().toString()));
 
 
             finish();
@@ -324,8 +340,23 @@ public class TermEditorActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_course_button)
     void fabClickHandler() {
+
+
         Intent intent = new Intent(this, CourseEditorActivity.class);
-        //intent.putExtra("term_title", String.valueOf(termTitleView));
+        //TODO: Show instructor this
+
+        if(isNewTerm == false) {
+
+
+            //int termId = termEditorViewModel.getAssociatedTerm();
+
+
+            //int termId = test.getInt(TERM_ID_KEY);
+
+            //intent.putExtra(TERM_ID_KEY, termId);
+
+        }
+
         startActivity(intent);
     }
 
