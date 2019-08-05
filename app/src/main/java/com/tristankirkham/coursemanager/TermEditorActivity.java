@@ -58,9 +58,9 @@ public class TermEditorActivity extends AppCompatActivity {
     @BindView(R.id.course_recyclerview)
     RecyclerView courseRecyclerView;
 
-    @BindView(R.id.courseSelector)
+    /*@BindView(R.id.courseSelector)
     Spinner courseSelector;
-
+*/
 
     //Register ViewModel
     private TermEditorViewModel termEditorViewModel;
@@ -108,14 +108,14 @@ public class TermEditorActivity extends AppCompatActivity {
         initRecyclerView();
         initTermViewModel();
         initCourseObserver();
-        initSpinner();
+        //initSpinner();
 
 
     }
 
 
 
-    @OnItemSelected(R.id.courseSelector)
+    /*@OnItemSelected(R.id.courseSelector)
     public void initCourseSelectorSpinner(int position) {
 
         courseSelector.getItemAtPosition(position);
@@ -123,18 +123,18 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
 
-    }
+    }*/
 
-    private Object getSpinnerObject() {
-
-
-        return courseSelector.getSelectedItem().toString();
-    }
-
-    private void initSpinner() {
+   /* private Object getSpinnerObject() {
 
 
-        /*List<CharSequence> courseStatusChoices = new ArrayList<>();
+        return //courseSelector.getSelectedItem().toString();
+    }*/
+
+    /*private void initSpinner() {
+
+
+        *//*List<CharSequence> courseStatusChoices = new ArrayList<>();
 
         courseStatusChoices.add("In Progress");
         courseStatusChoices.add("Complete");
@@ -147,7 +147,7 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
         courseSelector.setAdapter(adapter);
-*/
+*//*
 
         ArrayList<CourseEntity> availableCourses = new ArrayList<>();
         for (CourseEntity e : courseData) {
@@ -166,7 +166,7 @@ public class TermEditorActivity extends AppCompatActivity {
 
 
         }
-    }
+    }*/
 
 
 

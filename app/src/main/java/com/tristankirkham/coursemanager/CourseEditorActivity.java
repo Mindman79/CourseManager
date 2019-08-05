@@ -174,7 +174,8 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         courseStatusChoices.add("In Progress");
         courseStatusChoices.add("Complete");
-        courseStatusChoices.add("Next");
+        courseStatusChoices.add("Dropped");
+        courseStatusChoices.add("Plan on taking next");
 
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseStatusChoices);
@@ -188,12 +189,13 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     }
 
-    private Object getSpinnerValue() {
+    private int getSpinnerValue() {
 
-        return courseStatusView.getSelectedItem();
+        return courseStatusView.getSelectedItemPosition();
     }
 
     private int getSpinnerPosition() {
+
 
         return adapter.getPosition(position);
 
@@ -207,7 +209,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private void saveAndReturn() {
 
        String courseTitle = courseTitleView.getText().toString();
-        int status = getSpinnerPosition();
+        int status = getSpinnerValue();
 
         /*Date startDate = null;
         try {
