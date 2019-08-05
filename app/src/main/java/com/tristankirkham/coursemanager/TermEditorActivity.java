@@ -12,10 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,17 +21,14 @@ import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
 import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
-import com.tristankirkham.coursemanager.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;

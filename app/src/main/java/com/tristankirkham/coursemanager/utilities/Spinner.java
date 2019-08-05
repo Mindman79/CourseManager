@@ -1,14 +1,8 @@
 package com.tristankirkham.coursemanager.utilities;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
-
-import com.tristankirkham.coursemanager.R;
-
-import butterknife.BindView;
 
 public class Spinner extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 

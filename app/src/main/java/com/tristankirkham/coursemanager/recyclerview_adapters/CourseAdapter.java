@@ -20,7 +20,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
-import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 

@@ -8,7 +8,6 @@ import android.text.TextUtils;
 
 import com.tristankirkham.coursemanager.database.AppRepository;
 import com.tristankirkham.coursemanager.database.CourseEntity;
-import com.tristankirkham.coursemanager.database.TermEntity;
 
 import java.util.Date;
 import java.util.concurrent.Executor;

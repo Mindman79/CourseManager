@@ -118,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (id == R.id.action_delete_all) {
 
-            deleteAllTerms();
+            deleteAllData();
+
             return true;
         }
 
@@ -127,9 +128,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void deleteAllTerms() {
+    private void deleteAllData() {
 
-        termViewModel.deleteAllTerms();
+        termViewModel.deleteAllData();
+
 
     }
 

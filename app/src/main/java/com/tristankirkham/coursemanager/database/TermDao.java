@@ -34,7 +34,7 @@ public interface TermDao {
 
     //Delete all terms
     @Query("DELETE FROM term")
-    int deleteAll();
+    int deleteAllTerms();
 
     //Count all term
     @Query("SELECT COUNT(*) FROM term")

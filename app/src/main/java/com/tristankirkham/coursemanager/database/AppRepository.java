@@ -58,15 +58,7 @@ public class AppRepository {
         return Db.termDao().getAll();
     }
 
-    public void deleteAllTerms() {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Db.termDao().deleteAll();
-            }
-        });
 
-    }
 
     public TermEntity getTermById(int termId) {
         return Db.termDao().getTermById(termId);
@@ -170,6 +162,20 @@ public class AppRepository {
                 Db.assessmentDao().deleteAssessment(value);
             }
         });
+
+    }
+
+    //Everything
+    public void deleteAllData() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Db.termDao().deleteAllTerms();
+                Db.courseDao().deleteAllCourses();
+                Db.assessmentDao().deleteAllAssessments();
+            }
+        });
+
 
     }
 

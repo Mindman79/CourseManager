@@ -4,35 +4,23 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.database.CourseEntity;
-import com.tristankirkham.coursemanager.database.TermEntity;
-import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
-import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -45,14 +33,8 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     private CourseEditorViewModel courseEditorViewModel;
     private boolean isNewCourse, isEditing;
-
-    private List<CourseEntity> courseData = new ArrayList<>();
-
     private ArrayAdapter<CharSequence> adapter;
-
-
-    private CharSequence position;
-    private int term_id;
+    int term_id = -1;
 
 
     @BindView(R.id.course_title)
@@ -75,6 +57,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     @BindView(R.id.course_mentor_email)
     TextView mentorEmailView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,11 +108,12 @@ public class CourseEditorActivity extends AppCompatActivity {
                     courseTitleView.setText(courseEntity.getCourseName());
                     courseStartDateView.setText(courseEntity.getStartDate().toString());
                     courseEndDateView.setText(courseEntity.getEndDate().toString());
-                    int position = getSpinnerPosition();
-                    courseStatusView.setSelection(position);
+                    courseStatusView.setSelection(courseEntity.getStatus());
                     mentorNameView.setText(courseEntity.getMentorName());
                     mentorPhoneView.setText(courseEntity.getMentorPhone());
                     mentorEmailView.setText(courseEntity.getMentorEmail());
+
+
 
                 }
 
@@ -148,13 +132,19 @@ public class CourseEditorActivity extends AppCompatActivity {
         } else if ( extras.containsKey(TERM_ID_KEY)) {
             term_id = extras.getInt(TERM_ID_KEY);
             setTitle("New course");
+            isNewCourse = true;
             Toast.makeText(this, "Course data contains Term key", Toast.LENGTH_LONG).show();
+
+
+
 
 
         } else {
             setTitle("Edit course");
-            Toast.makeText(this, "Course data is NOT blank", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Editing existing course", Toast.LENGTH_LONG).show();
             int courseId = extras.getInt(COURSE_ID_KEY);
+
+
             courseEditorViewModel.loadData(courseId);
 
 
@@ -182,57 +172,44 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-
         courseStatusView.setAdapter(adapter);
 
 
 
     }
 
-    private int getSpinnerValue() {
-
-        return courseStatusView.getSelectedItemPosition();
-    }
-
-    private int getSpinnerPosition() {
-
-
-        return adapter.getPosition(position);
-
-
-    }
-
-
-
 
 
     private void saveAndReturn() {
 
-       String courseTitle = courseTitleView.getText().toString();
-        int status = getSpinnerValue();
+        String courseTitle = courseTitleView.getText().toString();
+        int status = courseStatusView.getSelectedItemPosition();
 
-        /*Date startDate = null;
-        try {
-            startDate = TextFormatter.fullDateFormat.parse(courseStartDateView.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Date endDate = null;
-        try {
-            endDate = TextFormatter.fullDateFormat.parse(courseEndDateView.getText().toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
 
-        String mentorName = mentorNameView.getText().toString();
-        String mentorPhone = mentorPhoneView.getText().toString();
-        String mentorEmail = mentorEmailView.getText().toString();*/
+        courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
+            @Override
+            public void onChanged(@NonNull CourseEntity courseEntity) {
+
+                int existingTermID = courseEntity.getTerm_id();
+
+
+
+
+                if (existingTermID >= 0) {
+                    term_id = existingTermID;
+
+
+                }
+            }
+
+        });
+
+
 
         if (courseTitle != null && !courseTitle.isEmpty()) {
 
             courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), term_id);
 
-            //courseEditorViewModel.saveCourse(courseTitle, startDate, endDate, status, mentorName, mentorPhone, mentorEmail);
 
             finish();
 
@@ -249,22 +226,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     }
 
 
-           /* try {
-                Date startDate = TextFormatter.fullDateFormat.parse(courseStartDateView.getText().toString());
-                Date endDate = TextFormatter.fullDateFormat.parse(courseEndDateView.getText().toString());
 
-                courseEditorViewModel.saveCourse(courseTitle, startDate, endDate, i, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString());
-
-                finish();
-
-
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-
-        }
-    }*/
 
 
     //Handle saves with the checkmark button
@@ -319,5 +281,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
+
+
 
 }
