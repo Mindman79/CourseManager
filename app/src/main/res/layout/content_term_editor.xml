@@ -72,25 +72,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save_button" />
 
-    <Spinner
-        android:id="@+id/courseSelector"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_marginTop="22dp"
-        android:spinnerMode="dropdown"
-        app:layout_constraintTop_toBottomOf="@+id/term_end_date"
-        tools:layout_editor_absoluteX="8dp" />
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="189dp"
-        android:layout_height="225dp"
+        android:layout_width="141dp"
+        android:layout_height="189dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toEndOf="@+id/add_course_button"
-        app:layout_constraintTop_toBottomOf="@+id/courseSelector"
-        app:layout_constraintVertical_bias="0.176">
+        app:layout_constraintTop_toBottomOf="@+id/term_end_date"
+        app:layout_constraintVertical_bias="0.356">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/course_recyclerview"
@@ -108,6 +99,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+
+
     </android.support.constraint.ConstraintLayout>
 
 
