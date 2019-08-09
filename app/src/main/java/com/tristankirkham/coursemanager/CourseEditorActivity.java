@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +59,12 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.course_mentor_email)
     TextView mentorEmailView;
 
+    @BindView(R.id.associated_assessments_text)
+    TextView associatedAssessmentsText;
+
+    @BindView(R.id.add_assessment_button)
+    Button addAssessmentButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +93,13 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         //Initialize spinner
         initSpinner();
+
+
+        if (isNewCourse == true) {
+            addAssessmentButton.setEnabled(false);
+            associatedAssessmentsText.setText("Assessments in Course (Save Course to Add Assessments)");
+
+        }
 
 
     }

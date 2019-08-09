@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
@@ -48,17 +50,23 @@ public class TermEditorActivity extends AppCompatActivity {
     @BindView(R.id.term_end_date)
     TextView termEndDateView;
 
+    @BindView(R.id.associated_courses)
+    TextView associatedCoursesText;
+
+    @BindView(R.id.add_course_button)
+    Button addCourseButton;
+
+
     //Course RecyclerView
     @BindView(R.id.course_recyclerview)
     RecyclerView courseRecyclerView;
 
-    /*@BindView(R.id.courseSelector)
-    Spinner courseSelector;
-*/
+
 
     //Register ViewModel
     private TermEditorViewModel termEditorViewModel;
-    private boolean isNewTerm, isEditing;
+    private boolean isEditing, isNewTerm;
+
 
     //New instance of CourseAdapter
     private CourseAdapter courseAdapter;
@@ -99,68 +107,28 @@ public class TermEditorActivity extends AppCompatActivity {
         }
 
 
+
+
+
+
+
+
+
+
+
         initRecyclerView();
         initTermViewModel();
         initCourseObserver();
-        //initSpinner();
 
+
+        if (isNewTerm == true) {
+            addCourseButton.setEnabled(false);
+            associatedCoursesText.setText("Courses in Term (Save Term to Add Courses)");
+
+        }
 
     }
 
-
-
-    /*@OnItemSelected(R.id.courseSelector)
-    public void initCourseSelectorSpinner(int position) {
-
-        courseSelector.getItemAtPosition(position);
-
-
-
-
-    }*/
-
-   /* private Object getSpinnerObject() {
-
-
-        return //courseSelector.getSelectedItem().toString();
-    }*/
-
-    /*private void initSpinner() {
-
-
-        *//*List<CharSequence> courseStatusChoices = new ArrayList<>();
-
-        courseStatusChoices.add("In Progress");
-        courseStatusChoices.add("Complete");
-        courseStatusChoices.add("Next");
-
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseStatusChoices);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        courseSelector.setAdapter(adapter);
-*//*
-
-        ArrayList<CourseEntity> availableCourses = new ArrayList<>();
-        for (CourseEntity e : courseData) {
-
-
-            availableCourses.add(e);
-
-
-            dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, availableCourses);
-
-
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-            courseSelector.setAdapter(dataAdapter);
-
-
-        }
-    }*/
 
 
 
@@ -320,6 +288,9 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
+
+
+
     //Save date when device changes orientation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -334,20 +305,20 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.add_course_button)
+
+
+    @Optional @OnClick(R.id.add_course_button)
     void fabClickHandler() {
 
 
+
+
         Intent intent = new Intent(this, CourseEditorActivity.class);
-        //TODO: Show instructor this
+
 
         if(isNewTerm == false) {
 
 
-            //int termId = termEditorViewModel.getAssociatedTerm();
-
-
-            //int termId = test.getInt(TERM_ID_KEY);
 
             intent.putExtra(TERM_ID_KEY, termId);
 
