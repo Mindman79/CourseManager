@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.AssessmentEditorActivity;
 import com.tristankirkham.coursemanager.R;
@@ -38,7 +39,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View view = inflater.inflate(R.layout.course_list_item, parent, false);
+        View view = inflater.inflate(R.layout.assessment_list_item, parent, false);
         return new ViewHolder(view);
 
 
@@ -50,6 +51,8 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
         final AssessmentEntity assessment = assessmentList.get(position);
 
         holder.assessment_title.setText(assessment.getAssessmentName());
+
+
 
 
         holder.assessment_fab.setOnClickListener(new View.OnClickListener() {

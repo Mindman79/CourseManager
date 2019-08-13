@@ -1,11 +1,15 @@
 package com.tristankirkham.coursemanager;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +20,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.tristankirkham.coursemanager.database.AssessmentEntity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
+import com.tristankirkham.coursemanager.recyclerview_adapters.AssessmentAdapter;
+import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
+import com.tristankirkham.coursemanager.viewmodel.AssessmentViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
+import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,8 +47,10 @@ public class CourseEditorActivity extends AppCompatActivity {
     private boolean isNewCourse, isEditing;
     private ArrayAdapter<CharSequence> adapter;
     int term_id = -1;
-
     private int courseId;
+    private List<AssessmentEntity> assessmentData = new ArrayList<>();
+    private AssessmentAdapter assessmentAdapter;
+    private AssessmentViewModel assessmentViewModel;
 
     @BindView(R.id.course_title)
     TextView courseTitleView;
@@ -68,6 +79,9 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.add_assessment_button)
     Button addAssessmentButton;
 
+    @BindView(R.id.assessment_recyclerview)
+    RecyclerView assessmentRecyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +104,11 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         }
 
-        //Initialize the ViewModel
-        initCourseEditorViewModel();
-
-        //Initialize spinner
-        initSpinner();
-        
-        initAssessmentObserver();
         initRecyclerView();
+        initCourseEditorViewModel();
+        initSpinner();
+        initAssessmentObserver();
+
 
 
         if (isNewCourse == true) {
@@ -110,13 +121,53 @@ public class CourseEditorActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
+
+        //Each item will be the same height
+        assessmentRecyclerView.setHasFixedSize(true);
+
+        //Create layoutManager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        //Pass in layoutmanager
+        assessmentRecyclerView.setLayoutManager(layoutManager);
+
+
     }
 
     private void initAssessmentObserver() {
-        
-        
-        
-        
+
+        final Observer<List<AssessmentEntity>> assessmentObserver = new Observer<List<AssessmentEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<AssessmentEntity> assessmentEntities) {
+                assessmentData.clear();
+
+                assessmentData.addAll(assessmentEntities);
+
+               /* for (AssessmentEntity a : assessmentEntities)
+                    if (a.getCourseId() == courseId)
+                        assessmentData.add(a);*/
+
+
+
+                if (assessmentAdapter == null) {
+                    assessmentAdapter = new AssessmentAdapter(assessmentData, CourseEditorActivity.this);
+
+                    assessmentRecyclerView.setAdapter(assessmentAdapter);
+
+                } else {
+
+                    assessmentAdapter.notifyDataSetChanged();
+                }
+            }
+
+        };
+
+        assessmentViewModel = ViewModelProviders.of(this).get(AssessmentViewModel.class);
+        assessmentViewModel.assessmentList.observe(this, assessmentObserver);
+
+
+
+
     }
 
     private void initCourseEditorViewModel() {

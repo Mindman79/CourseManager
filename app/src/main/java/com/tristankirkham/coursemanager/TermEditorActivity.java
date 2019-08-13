@@ -143,6 +143,7 @@ public class TermEditorActivity extends AppCompatActivity {
                 courseData.clear();
 
 
+
                 for (CourseEntity c : courseEntities)
                     if (c.getTerm_id() == termId)
                         courseData.add(c);
