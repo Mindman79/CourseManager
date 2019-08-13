@@ -38,8 +38,6 @@ import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 public class TermEditorActivity extends AppCompatActivity {
 
 
-
-
     //Bind views
     @BindView(R.id.term_title)
     TextView termTitleView;
@@ -62,7 +60,6 @@ public class TermEditorActivity extends AppCompatActivity {
     RecyclerView courseRecyclerView;
 
 
-
     //Register ViewModel
     private TermEditorViewModel termEditorViewModel;
     private boolean isEditing, isNewTerm;
@@ -80,9 +77,11 @@ public class TermEditorActivity extends AppCompatActivity {
 
     private int termId;
 
+    private int termIDtest;
+    private int courseIDtest;
 
 
-
+    private int associatedCourseTermID;
 
 
     @Override
@@ -107,15 +106,6 @@ public class TermEditorActivity extends AppCompatActivity {
         }
 
 
-
-
-
-
-
-
-
-
-
         initRecyclerView();
         initTermViewModel();
         initCourseObserver();
@@ -130,11 +120,6 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
     private void initCourseObserver() {
 
         final Observer<List<CourseEntity>> courseObserver = new Observer<List<CourseEntity>>() {
@@ -143,11 +128,9 @@ public class TermEditorActivity extends AppCompatActivity {
                 courseData.clear();
 
 
-
                 for (CourseEntity c : courseEntities)
                     if (c.getTerm_id() == termId)
                         courseData.add(c);
-
 
 
                 if (courseAdapter == null) {
@@ -217,8 +200,6 @@ public class TermEditorActivity extends AppCompatActivity {
             termEditorViewModel.loadData(termId);
 
 
-
-
         }
 
     }
@@ -239,16 +220,54 @@ public class TermEditorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+
+       /* termEditorViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
+            @Override
+            public void onChanged(@Nullable TermEntity termEntity) {
+
+               termIDtest = termEntity.getTerm_id();
+
+            }
+        });
+
+
+
+
+
+
+        final Observer<CourseEntity> courseObserver = new Observer<CourseEntity>() {
+            @Override
+            public void onChanged(@Nullable CourseEntity courseEntity) {
+
+                courseIDtest = courseEntity.getTerm_id();
+
+
+
+
+            }
+
+        };*/
+
+
         if (item.getItemId() == android.R.id.home) {
             saveAndReturn();
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
 
+
+            //getCount();
+            //if(courseIDtest == termIDtest) {
+
             termEditorViewModel.deleteTerm();
             finish();
 
+            //} else {
 
+            //Toast.makeText(this, "Cannot delete Term, courses attached! Please delete associate courses first", Toast.LENGTH_SHORT).show();
         }
+
+
+
 
         return super.onOptionsItemSelected(item);
 
@@ -289,9 +308,6 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
-
-
-
     //Save date when device changes orientation
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -306,19 +322,15 @@ public class TermEditorActivity extends AppCompatActivity {
     }
 
 
-
-
-    @Optional @OnClick(R.id.add_course_button)
+    @Optional
+    @OnClick(R.id.add_course_button)
     void fabClickHandler() {
-
-
 
 
         Intent intent = new Intent(this, CourseEditorActivity.class);
 
 
-        if(isNewTerm == false) {
-
+        if (isNewTerm == false) {
 
 
             intent.putExtra(TERM_ID_KEY, termId);

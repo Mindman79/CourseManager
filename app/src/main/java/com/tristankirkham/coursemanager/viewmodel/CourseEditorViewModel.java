@@ -80,4 +80,8 @@ public class CourseEditorViewModel extends AndroidViewModel {
         courseRepository.deleteCourse(courseLiveData.getValue());
   }
 
+    public void getAssociatedTerm(int term_id) {
+        courseRepository.getAssociatedTerm(term_id);
+    }
+
 }

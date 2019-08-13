@@ -79,7 +79,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return assessmentList.size();
     }
 
 

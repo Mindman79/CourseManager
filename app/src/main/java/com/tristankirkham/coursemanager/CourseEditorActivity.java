@@ -141,11 +141,11 @@ public class CourseEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<AssessmentEntity> assessmentEntities) {
                 assessmentData.clear();
 
-                assessmentData.addAll(assessmentEntities);
+                //assessmentData.addAll(assessmentEntities);
 
-               /* for (AssessmentEntity a : assessmentEntities)
+               for (AssessmentEntity a : assessmentEntities)
                     if (a.getCourseId() == courseId)
-                        assessmentData.add(a);*/
+                        assessmentData.add(a);
 
 
 

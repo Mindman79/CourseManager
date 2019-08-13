@@ -20,9 +20,6 @@ public class AssessmentEntity {
 
 
 
-
-
-
     @Ignore
     public AssessmentEntity() {
     }
