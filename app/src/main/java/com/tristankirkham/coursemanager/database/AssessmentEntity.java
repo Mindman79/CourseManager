@@ -7,6 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 import java.util.Date;
 
 @Entity(tableName = "assessment")
+
+
 public class AssessmentEntity {
 
     @PrimaryKey(autoGenerate = true)
@@ -35,10 +37,11 @@ public class AssessmentEntity {
 
 
     @Ignore
-    public AssessmentEntity(String assessmentName, int assessmentType, Date assessmentDate) {
+    public AssessmentEntity(String assessmentName, int assessmentType, Date assessmentDate, int courseId) {
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
         this.assessmentDate = assessmentDate;
+        this.courseId = courseId;
     }
 
 

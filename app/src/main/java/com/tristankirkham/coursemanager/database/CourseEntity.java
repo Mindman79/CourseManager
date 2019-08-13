@@ -9,8 +9,6 @@ import java.util.Date;
 @Entity(tableName = "course")
 
 
-/*@Entity(tableName = "course", foreignKeys = @ForeignKey(entity = TermEntity.class, onDelete = CASCADE, parentColumns = "term_id", childColumns = "course_id"))*/
-
 
 public class CourseEntity {
 

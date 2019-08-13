@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tristankirkham.coursemanager.AssessmentEditorActivity;
 import com.tristankirkham.coursemanager.R;
 import com.tristankirkham.coursemanager.database.AssessmentEntity;
 

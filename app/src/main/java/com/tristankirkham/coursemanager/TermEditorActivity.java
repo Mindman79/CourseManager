@@ -142,12 +142,12 @@ public class TermEditorActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<CourseEntity> courseEntities) {
                 courseData.clear();
 
-                //TODO: finish this
+
                 for (CourseEntity c : courseEntities)
                     if (c.getTerm_id() == termId)
                         courseData.add(c);
 
-                //courseData.addAll(courseEntities);
+
 
                 if (courseAdapter == null) {
                     courseAdapter = new CourseAdapter(courseData, TermEditorActivity.this);

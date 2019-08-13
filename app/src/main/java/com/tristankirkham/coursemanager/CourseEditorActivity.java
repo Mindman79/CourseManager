@@ -2,6 +2,7 @@ package com.tristankirkham.coursemanager;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Optional;
 
 import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
@@ -37,6 +39,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private ArrayAdapter<CharSequence> adapter;
     int term_id = -1;
 
+    private int courseId;
 
     @BindView(R.id.course_title)
     TextView courseTitleView;
@@ -73,7 +76,6 @@ public class CourseEditorActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //String termTitle = getIntent().getStringExtra("term_title");
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -93,6 +95,9 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         //Initialize spinner
         initSpinner();
+        
+        initAssessmentObserver();
+        initRecyclerView();
 
 
         if (isNewCourse == true) {
@@ -102,6 +107,16 @@ public class CourseEditorActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void initRecyclerView() {
+    }
+
+    private void initAssessmentObserver() {
+        
+        
+        
+        
     }
 
     private void initCourseEditorViewModel() {
@@ -156,7 +171,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         } else {
             setTitle("Edit course");
             Toast.makeText(this, "Editing existing course", Toast.LENGTH_LONG).show();
-            int courseId = extras.getInt(COURSE_ID_KEY);
+            courseId = extras.getInt(COURSE_ID_KEY);
 
 
             courseEditorViewModel.loadData(courseId);
@@ -282,6 +297,31 @@ public class CourseEditorActivity extends AppCompatActivity {
     void saveButtonClickHandler() {
         saveAndReturn();
     }
+
+
+
+
+    @Optional
+    @OnClick(R.id.add_assessment_button)
+    void fabClickHandler() {
+
+
+
+
+        Intent intent = new Intent(this, AssessmentEditorActivity.class);
+
+
+        if(isNewCourse == false) {
+
+
+
+            intent.putExtra(COURSE_ID_KEY, courseId);
+
+        }
+
+        startActivity(intent);
+    }
+
 
 
     //Add delete menu option
