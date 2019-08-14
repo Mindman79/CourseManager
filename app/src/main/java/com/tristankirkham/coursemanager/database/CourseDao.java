@@ -41,8 +41,10 @@ public interface CourseDao {
     int deleteAllCourses();
 
     //Count all courses
-    @Query("SELECT COUNT(*) FROM course")
-    int getCoursesCount();
+    @Query("SELECT COUNT(*) FROM course WHERE term_id = :term_id")
+    int getCoursesCount(int term_id);
+
+
 
 
 

@@ -130,6 +130,18 @@ public class AppRepository {
 
     }
 
+    public int getCoursesCount(final int term_id) {
+
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Db.courseDao().getCoursesCount(term_id);
+            }
+        });
+
+        return term_id;
+    }
+
 
     //Assessment
 

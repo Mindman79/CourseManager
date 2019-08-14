@@ -221,7 +221,7 @@ public class TermEditorActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-       /* termEditorViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
+       /*termEditorViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
             @Override
             public void onChanged(@Nullable TermEntity termEntity) {
 
@@ -229,24 +229,8 @@ public class TermEditorActivity extends AppCompatActivity {
 
             }
         });
+*/
 
-
-
-
-
-
-        final Observer<CourseEntity> courseObserver = new Observer<CourseEntity>() {
-            @Override
-            public void onChanged(@Nullable CourseEntity courseEntity) {
-
-                courseIDtest = courseEntity.getTerm_id();
-
-
-
-
-            }
-
-        };*/
 
 
         if (item.getItemId() == android.R.id.home) {
@@ -254,18 +238,18 @@ public class TermEditorActivity extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.action_delete) {
 
+            if (courseAdapter.getItemCount() == 0) {
 
-            //getCount();
-            //if(courseIDtest == termIDtest) {
 
-            termEditorViewModel.deleteTerm();
-            finish();
+                termEditorViewModel.deleteTerm();
+                finish();
 
-            //} else {
+            } else {
 
-            //Toast.makeText(this, "Cannot delete Term, courses attached! Please delete associate courses first", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cannot delete Term, courses attached! Please delete associated courses first", Toast.LENGTH_LONG).show();
+            }
+
         }
-
 
 
 
