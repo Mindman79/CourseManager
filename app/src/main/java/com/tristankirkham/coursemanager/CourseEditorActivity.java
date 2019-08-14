@@ -24,10 +24,12 @@ import com.tristankirkham.coursemanager.database.AssessmentEntity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.recyclerview_adapters.AssessmentAdapter;
 import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -189,8 +191,8 @@ public class CourseEditorActivity extends AppCompatActivity {
 
 
                     courseTitleView.setText(courseEntity.getCourseName());
-                    courseStartDateView.setText(courseEntity.getStartDate().toString());
-                    courseEndDateView.setText(courseEntity.getEndDate().toString());
+                    courseStartDateView.setText(TextFormatter.fullDateFormat.format(courseEntity.getStartDate()));
+                    courseEndDateView.setText(TextFormatter.fullDateFormat.format(courseEntity.getEndDate()));
                     courseStatusView.setSelection(courseEntity.getStatus());
                     mentorNameView.setText(courseEntity.getMentorName());
                     mentorPhoneView.setText(courseEntity.getMentorPhone());
@@ -266,9 +268,28 @@ public class CourseEditorActivity extends AppCompatActivity {
 
     private void saveAndReturn() {
 
-        String courseTitle = courseTitleView.getText().toString();
-        int status = courseStatusView.getSelectedItemPosition();
+        String courseTitle = null;
+        int status = 0;
+        Date startDate = null;
+        Date endDate = null;
+        String mentorName = null;
+        String mentorPhone = null;
+        String mentorEmail = null;
+        String note = null;
 
+        try {
+            courseTitle = courseTitleView.getText().toString();
+            status = courseStatusView.getSelectedItemPosition();
+            startDate = TextFormatter.fullDateFormat.parse(courseStartDateView.getText().toString());
+            endDate = TextFormatter.fullDateFormat.parse(courseEndDateView.getText().toString());
+            mentorName = mentorNameView.getText().toString();
+            mentorPhone = mentorPhoneView.getText().toString();
+            mentorEmail = mentorEmailView.getText().toString();
+            note = noteView.getText().toString();
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
         courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
@@ -291,9 +312,9 @@ public class CourseEditorActivity extends AppCompatActivity {
 
 
 
-        if (courseTitle != null && !courseTitle.isEmpty()) {
+        if (courseTitle != null && !courseTitle.isEmpty() && startDate != null && !startDate.toString().isEmpty() && !endDate.toString().isEmpty() && !mentorName.isEmpty() && !mentorPhone.isEmpty() && !mentorEmail.isEmpty()) {
 
-            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), noteView.getText().toString(), term_id);
+            courseEditorViewModel.saveCourse(courseTitle, startDate, endDate, status, mentorName, mentorPhone, mentorEmail, note, term_id);
 
 
             finish();
@@ -301,9 +322,9 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         } else {
 
-            Toast.makeText(this, "Data has NOT been completely entered, returning to previous screen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data has NOT been completely entered, please fill out form completely or use device back button to return without saving", Toast.LENGTH_SHORT).show();
 
-            finish();
+            //finish();
 
 
         }
