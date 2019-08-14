@@ -322,7 +322,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         } else {
 
-            Toast.makeText(this, "Data has NOT been completely entered, please fill out form completely or use device back button to return without saving", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data has NOT been completely entered, please fill out form completely or use device back button to return without saving", Toast.LENGTH_LONG).show();
 
             //finish();
 
