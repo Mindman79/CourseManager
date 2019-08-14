@@ -108,58 +108,73 @@
         app:layout_constraintTop_toBottomOf="@+id/course_mentor_phone"
         tools:layout_editor_absoluteX="0dp" />
 
-
-    <Button
-        android:id="@+id/course_save_button"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/course_note"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-
-        android:layout_marginTop="28dp"
-        android:text="Save"
+        android:layout_margin="@dimen/text_margin"
+        android:hint="Enter optional notes"
+        android:inputType="textMultiLine|textCapSentences"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/course_mentor_email" />
 
-    <Button
-        android:id="@+id/add_assessment_button"
-        android:layout_width="wrap_content"
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/course_button_holder"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Add Assessment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_save_button" />
+        app:layout_constraintTop_toBottomOf="@id/course_note">
+
+        <Button
+            android:id="@+id/course_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Save"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/add_assessment_button"
+            android:layout_width="200dp"
+            android:layout_height="42dp"
+            android:text="Add Assessment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/course_save_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
 
     <EditText
         android:id="@+id/associated_assessments_text"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
         android:ems="10"
+        android:focusable="false"
         android:inputType="none"
         android:text="Assessments in Course"
-        android:textSize="15dp"
-        android:textIsSelectable="true"
-
-        android:focusable="false"
-        app:layout_constraintBottom_toBottomOf="@id/constraintLayout2"
+        android:textIsSelectable="false"
+        android:textSize="16dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.886"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/course_mentor_email"
-        app:layout_constraintVertical_bias="0.079" />
+        app:layout_constraintTop_toBottomOf="@+id/course_button_holder" />
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:layout_marginEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.596"
-        app:layout_constraintStart_toEndOf="@+id/save_button"
-        app:layout_constraintTop_toBottomOf="@+id/course_mentor_email"
-        app:layout_constraintVertical_bias="0.391">
+        app:layout_constraintTop_toBottomOf="@+id/associated_assessments_text"
+        app:layout_constraintVertical_bias="0.0">
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/assessment_recyclerview"
@@ -171,15 +186,16 @@
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-
     </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>
+
+

@@ -79,6 +79,9 @@ public class CourseEditorActivity extends AppCompatActivity {
     @BindView(R.id.add_assessment_button)
     Button addAssessmentButton;
 
+    @BindView(R.id.course_note)
+    TextView noteView;
+
     @BindView(R.id.assessment_recyclerview)
     RecyclerView assessmentRecyclerView;
 
@@ -192,6 +195,7 @@ public class CourseEditorActivity extends AppCompatActivity {
                     mentorNameView.setText(courseEntity.getMentorName());
                     mentorPhoneView.setText(courseEntity.getMentorPhone());
                     mentorEmailView.setText(courseEntity.getMentorEmail());
+                    noteView.setText(courseEntity.getNote());
 
 
 
@@ -266,6 +270,7 @@ public class CourseEditorActivity extends AppCompatActivity {
         int status = courseStatusView.getSelectedItemPosition();
 
 
+
         courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
             @Override
             public void onChanged(@NonNull CourseEntity courseEntity) {
@@ -288,7 +293,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         if (courseTitle != null && !courseTitle.isEmpty()) {
 
-            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), term_id);
+            courseEditorViewModel.saveCourse(courseTitle, new Date(courseStartDateView.getText().toString()), new Date(courseEndDateView.getText().toString()), status, mentorNameView.getText().toString(), mentorPhoneView.getText().toString(), mentorEmailView.getText().toString(), noteView.getText().toString(), term_id);
 
 
             finish();
@@ -296,7 +301,7 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         } else {
 
-            Toast.makeText(this, "Data has NOT been entered, returning to previous screen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data has NOT been completely entered, returning to previous screen", Toast.LENGTH_SHORT).show();
 
             finish();
 

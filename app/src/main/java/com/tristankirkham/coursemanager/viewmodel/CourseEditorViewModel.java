@@ -45,7 +45,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
     }
 
 
-  public void saveCourse(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int term_id) {
+  public void saveCourse(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, String note, int term_id) {
 
       CourseEntity course = courseLiveData.getValue();
 
@@ -55,7 +55,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
               return;
 
           }
-          course = new CourseEntity(courseName.trim(), startDate, endDate, status, mentorName, mentorPhone, mentorEmail, term_id);
+          course = new CourseEntity(courseName.trim(), startDate, endDate, status, mentorName, mentorPhone, mentorEmail, note, term_id);
 
 
       } else {
@@ -66,6 +66,7 @@ public class CourseEditorViewModel extends AndroidViewModel {
           course.setMentorName(mentorName);
           course.setMentorPhone(mentorPhone);
           course.setMentorEmail(mentorEmail);
+          course.setNote(note);
           course.setTerm_id(term_id);
 
       }

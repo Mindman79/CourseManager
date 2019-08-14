@@ -21,10 +21,11 @@ public class CourseEntity {
     private String mentorName;
     private String mentorPhone;
     private String mentorEmail;
+    private String note;
     private int term_id;
 
 
-    public CourseEntity(int course_id, String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int term_id) {
+    public CourseEntity(int course_id, String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, String note, int term_id) {
         this.course_id = course_id;
         this.courseName = courseName;
         this.startDate = startDate;
@@ -33,11 +34,13 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
+        this.note = note;
         this.term_id = term_id;
+
     }
 
     @Ignore
-    public CourseEntity(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, int term_id) {
+    public CourseEntity(String courseName, Date startDate, Date endDate, int status, String mentorName, String mentorPhone, String mentorEmail, String note, int term_id) {
         this.courseName = courseName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -45,6 +48,7 @@ public class CourseEntity {
         this.mentorName = mentorName;
         this.mentorPhone = mentorPhone;
         this.mentorEmail = mentorEmail;
+        this.note = note;
         this.term_id = term_id;
     }
 
@@ -123,5 +127,13 @@ public class CourseEntity {
 
     public void setTerm_id(int term_id) {
         this.term_id = term_id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

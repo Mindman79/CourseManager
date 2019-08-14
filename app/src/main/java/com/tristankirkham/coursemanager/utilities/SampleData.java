@@ -39,7 +39,7 @@ public class SampleData {
 
     public static List<CourseEntity> getCourses() {
         List<CourseEntity> courses = new ArrayList<>();
-        courses.add(new CourseEntity(1, "Programming", getDate(1), getDate(2), 3, "Yo mom", "801-725-1204", "mindman79@hotmail.com", 1));
+        courses.add(new CourseEntity(1, "Programming", getDate(1), getDate(2), 3, "Yo mom", "801-725-1204", "mindman79@hotmail.com", "Test note", 1));
         return courses;
 
 
