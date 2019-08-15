@@ -1,7 +1,11 @@
 package com.tristankirkham.coursemanager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -13,12 +17,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.database.AssessmentEntity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
+import com.tristankirkham.coursemanager.utilities.MyReceiver;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentEditorViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
 
@@ -42,6 +48,8 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     private boolean isNewAssessment, isEditing;
     private ArrayAdapter<CharSequence> adapter;
     int course_id = -1;
+    private Date assessmentDate;
+    private String assessmentTitle;
 
 
     @BindView(R.id.assessment_title)
@@ -52,6 +60,9 @@ public class AssessmentEditorActivity extends AppCompatActivity {
 
     @BindView(R.id.assessment_type_selector)
     Spinner assessmentTypeView;
+
+    @BindView(R.id.set_notification_button)
+    Button setNotificationButton;
 
 
     @Override
@@ -240,7 +251,40 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     }
 
 
-    //Add delete menu option
+    @OnClick(R.id.set_notification_button)
+    void notificationButtonHandler() {
+
+
+
+        assessmentEditorViewModel.assessmentLiveData.observe(this, new Observer<AssessmentEntity>() {
+            @Override
+            public void onChanged(@NonNull AssessmentEntity assessmentEntity) {
+
+                assessmentDate = assessmentEntity.getAssessmentDate();
+                assessmentTitle = assessmentEntity.getAssessmentName();
+
+
+            }
+
+        });
+
+
+        Intent intent = new Intent(AssessmentEditorActivity.this, MyReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, assessmentDate.getTime() + 1000, sender);
+
+    }
+
+
+
+
+
+
+
+
+
+//Add delete menu option
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!isNewAssessment) {

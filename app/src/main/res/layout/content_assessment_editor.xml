@@ -44,7 +44,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Assessment Type"
-
         android:layout_margin="@dimen/text_margin"
         app:layout_constraintTop_toBottomOf="@+id/assessment_date"
          />
@@ -68,11 +67,20 @@
         android:id="@+id/save_assessment_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="84dp"
         android:text="Save"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/assessment_type_selector" />
+
+    <Button
+        android:id="@+id/set_notification_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="116dp"
+        android:text="Set Due Date Notification"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/assessment_type_text" />
 
 
 </android.support.constraint.ConstraintLayout>
