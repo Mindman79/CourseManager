@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -28,6 +30,7 @@ import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
+
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -53,6 +56,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private List<AssessmentEntity> assessmentData = new ArrayList<>();
     private AssessmentAdapter assessmentAdapter;
     private AssessmentViewModel assessmentViewModel;
+    private ShareActionProvider shareActionProvider;
 
     @BindView(R.id.course_title)
     TextView courseTitleView;
@@ -335,20 +339,36 @@ public class CourseEditorActivity extends AppCompatActivity {
 
 
 
-    //Handle saves with the checkmark button
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
+
             saveAndReturn();
             return true;
+
         } else if (item.getItemId() == R.id.action_delete) {
 
             courseEditorViewModel.deleteCourse();
             finish();
 
+        } else if (item.getItemId() == R.id.menu_item_share) {
 
-        }
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            shareActionProvider.setShareIntent(sharingIntent);
+            sharingIntent.setType("text/plain");
+            String shareBody = "Check it out";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+            return true;
+
+
+            }
+
+
+
 
         return super.onOptionsItemSelected(item);
 
@@ -406,13 +426,25 @@ public class CourseEditorActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!isNewCourse) {
             MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.menu_term_editor, menu);
+            inflater.inflate(R.menu.menu_course_editor, menu);
+
+            MenuItem item = menu.findItem(R.id.menu_item_share);
+
+            shareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+
+            return true;
 
         }
         return super.onCreateOptionsMenu(menu);
 
     }
 
+
+    private void setShareIntent(Intent shareIntent) {
+        if (shareActionProvider != null) {
+            shareActionProvider.setShareIntent(shareIntent);
+        }
+    }
 
 
 }
