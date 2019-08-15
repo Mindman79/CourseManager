@@ -57,6 +57,7 @@ public class CourseEditorActivity extends AppCompatActivity {
     private AssessmentAdapter assessmentAdapter;
     private AssessmentViewModel assessmentViewModel;
     private ShareActionProvider shareActionProvider;
+    private String note;
 
     @BindView(R.id.course_title)
     TextView courseTitleView;
@@ -343,6 +344,20 @@ public class CourseEditorActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+
+        courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
+            @Override
+            public void onChanged(@NonNull CourseEntity courseEntity) {
+
+                note = courseEntity.getNote();
+
+
+            }
+
+        });
+
+
+
         if (item.getItemId() == android.R.id.home) {
 
             saveAndReturn();
@@ -355,15 +370,20 @@ public class CourseEditorActivity extends AppCompatActivity {
 
         } else if (item.getItemId() == R.id.menu_item_share) {
 
-            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-            shareActionProvider.setShareIntent(sharingIntent);
-            sharingIntent.setType("text/plain");
-            String shareBody = "Check it out";
-            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,"Subject");
-            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-            startActivity(Intent.createChooser(sharingIntent, "Share via"));
-            return true;
+            if(!note.isEmpty()) {
 
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareActionProvider.setShareIntent(sharingIntent);
+                sharingIntent.setType("text/plain");
+                String shareBody = note;
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Shared Course Note");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                return true;
+
+            } else {
+                Toast.makeText(this, "Please save a course note first, and then try again", Toast.LENGTH_LONG).show();
+            }
 
             }
 
