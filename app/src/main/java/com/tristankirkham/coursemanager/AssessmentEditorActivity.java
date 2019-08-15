@@ -271,6 +271,9 @@ public class AssessmentEditorActivity extends AppCompatActivity {
 
         Intent intent = new Intent(AssessmentEditorActivity.this, MyReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
+
+        intent.putExtra("AssessmentTitle", assessmentTitle);
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, assessmentDate.getTime() + 1000, sender);
 

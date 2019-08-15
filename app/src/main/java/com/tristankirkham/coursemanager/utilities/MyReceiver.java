@@ -22,10 +22,15 @@ public class MyReceiver extends BroadcastReceiver {
     String channel_id = "test";
 
 
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
+       /* Intent intent = get
 
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null)*/
 
         Toast.makeText(context, "Notification", Toast.LENGTH_LONG).show();
         createNotificationChannel(context, channel_id);
@@ -42,6 +47,8 @@ public class MyReceiver extends BroadcastReceiver {
     private void createNotificationChannel(Context context, String CHANNEL_ID) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = context.getResources().getString(R.string.channel_name);
