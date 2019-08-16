@@ -9,30 +9,6 @@
     tools:context=".TermEditorActivity"
     tools:showIn="@layout/activity_term_editor">
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-
-        android:layout_marginTop="108dp"
-        android:text="Save"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/term_end_date" />
-
-
-    <Button
-        android:id="@+id/add_course_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
-        android:layout_marginStart="8dp"
-
-        android:layout_marginTop="18dp"
-        android:text="Add Course"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save_button" />
 
     <EditText
         android:id="@+id/term_title"
@@ -60,22 +36,7 @@
         tools:layout_editor_absoluteY="67dp" />
 
 
-    <EditText
-        android:id="@+id/associated_courses"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:focusable="false"
-        android:inputType="none"
-        android:text="Courses in Term"
 
-        android:textIsSelectable="true"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.786"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/term_end_date"
-        app:layout_constraintVertical_bias="0.787" />
 
     <EditText
         android:id="@+id/term_end_date"
@@ -90,17 +51,65 @@
         app:layout_constraintTop_toBottomOf="@+id/term_start_date" />
 
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/courses_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/term_end_date"
+        tools:layout_editor_absoluteX="-162dp"
+        tools:layout_editor_absoluteY="138dp">
+
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:text="Save"
+            app:layout_constraintRight_toLeftOf="@id/add_course_button"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/add_course_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Course"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/save_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+    <EditText
+        android:id="@+id/associated_courses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="none"
+        android:text="Courses in Term"
+
+        android:textIsSelectable="true"
+        app:layout_constraintTop_toBottomOf="@+id/courses_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textSize="16dp"
+        android:textStyle="bold"
+
+        />
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="170dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintStart_toEndOf="@+id/add_course_button"
-        app:layout_constraintTop_toBottomOf="@+id/term_end_date"
-        app:layout_constraintVertical_bias="0.356">
+        app:layout_constraintTop_toBottomOf="@+id/associated_courses"
+        app:layout_constraintVertical_bias="0.0">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/course_recyclerview"
@@ -121,6 +130,13 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
+
+
+
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

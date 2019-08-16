@@ -26,11 +26,11 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-       /* Intent intent = get
 
-        Bundle extras = getIntent().getExtras();
+        String assessmentName = intent.getStringExtra("AssessmentTitle");
 
-        if(extras != null)*/
+
+        //if(extras != null)
 
         Toast.makeText(context, "Notification", Toast.LENGTH_LONG).show();
         createNotificationChannel(context, channel_id);

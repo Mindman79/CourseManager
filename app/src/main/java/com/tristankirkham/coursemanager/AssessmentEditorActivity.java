@@ -242,6 +242,7 @@ public class AssessmentEditorActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(AssessmentEditorActivity.this, MyReceiver.class);
+
             PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
 
             intent.putExtra("AssessmentTitle", assessmentTitle);
