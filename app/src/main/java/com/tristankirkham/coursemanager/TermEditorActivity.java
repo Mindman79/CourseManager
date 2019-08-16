@@ -20,9 +20,13 @@ import android.widget.Toast;
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.database.TermEntity;
 import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 import com.tristankirkham.coursemanager.viewmodel.TermEditorViewModel;
 
+import org.w3c.dom.Text;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -175,16 +179,18 @@ public class TermEditorActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable TermEntity termEntity) {
 
-                if (termEntity != null && !isEditing)
+                if (termEntity != null && !isEditing) {
 
 
                     termTitleView.setText(termEntity.getTitle());
-                termStartDateView.setText(termEntity.getStartDate().toString());
-                termEndDateView.setText(termEntity.getEndDate().toString());
+                    termStartDateView.setText(TextFormatter.fullDateFormat.format(termEntity.getStartDate()));
+                    termEndDateView.setText(TextFormatter.fullDateFormat.format(termEntity.getEndDate()));
 
+
+                }
 
             }
-        });
+       });
 
         Bundle extras = getIntent().getExtras();
 
@@ -219,17 +225,6 @@ public class TermEditorActivity extends AppCompatActivity {
     //Handle saves with the checkmark button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
-       /*termEditorViewModel.tLiveTerm.observe(this, new Observer<TermEntity>() {
-            @Override
-            public void onChanged(@Nullable TermEntity termEntity) {
-
-               termIDtest = termEntity.getTerm_id();
-
-            }
-        });
-*/
 
 
 
@@ -273,10 +268,22 @@ public class TermEditorActivity extends AppCompatActivity {
     private void saveAndReturn() {
 
 
-        String termTitle = termTitleView.getText().toString();
+        String termTitle = null;
+        Date startDate = null;
+        Date endDate = null;
+
+        try {
+            termTitle = termTitleView.getText().toString();
+            startDate = TextFormatter.fullDateFormat.parse(termStartDateView.getText().toString());
+            endDate = TextFormatter.fullDateFormat.parse(termEndDateView.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         if (termTitle != null && !termTitle.isEmpty()) {
 
-            termEditorViewModel.saveTerm(termTitle, new Date(termStartDateView.getText().toString()), new Date(termEndDateView.getText().toString()));
+            termEditorViewModel.saveTerm(termTitle, startDate, endDate);
 
 
             finish();
