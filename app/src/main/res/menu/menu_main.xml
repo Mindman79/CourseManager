@@ -5,15 +5,14 @@
     <item
         android:id="@+id/action_add_sample_data"
         android:orderInCategory="100"
-        android:title="@string/action_add_sample_data"
+        android:title="Add Sample Data"
         app:showAsAction="never" />
 
 
-
-<item
-android:id="@+id/action_delete_all"
-android:orderInCategory="101"
-android:title="@string/delete_all"
-app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete_all"
+        android:orderInCategory="101"
+        android:title="Delete All Data"
+        app:showAsAction="never" />
 
 </menu>

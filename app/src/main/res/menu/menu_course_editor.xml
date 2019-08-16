@@ -2,24 +2,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.tristankirkham.coursemanager.CourseEditorActivity">
+
+
     <item
-        android:id="@+id/action_add_sample_data"
+        android:id="@+id/action_delete_course"
         android:orderInCategory="100"
-        android:title="@string/action_add_sample_data"
+        android:title="Delete Course"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_delete"
-        android:orderInCategory="101"
-        android:title="Delete"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/menu_item_share"
-        android:orderInCategory="102"
+        android:orderInCategory="101"
         app:showAsAction="never"
-        android:title="Share"
+        android:title="Share Course Notes"
         app:actionProviderClass=
             "android.support.v7.widget.ShareActionProvider" />
+
+    <item
+        android:id="@+id/action_set_course_start_date_notification"
+        android:orderInCategory="102"
+        app:showAsAction="never"
+        android:title="Set Course Start Date Notification"
+        />
+
+    <item
+        android:id="@+id/action_set_course_end_date_notification"
+        android:orderInCategory="103"
+        app:showAsAction="never"
+        android:title="Set Course End Date Notification"
+        />
+
+
+
+
 
 </menu>

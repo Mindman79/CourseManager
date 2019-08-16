@@ -2,16 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.tristankirkham.coursemanager.TermEditorActivity">
-    <item
-        android:id="@+id/action_add_sample_data"
-        android:orderInCategory="100"
-        android:title="@string/action_add_sample_data"
-        app:showAsAction="never" />
+
 
     <item
         android:id="@+id/action_delete"
         android:orderInCategory="101"
-        android:title="Delete"
-        app:showAsAction="always" />
+        android:title="Delete Term"
+        app:showAsAction="never" />
 
 </menu>

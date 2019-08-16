@@ -1,8 +1,11 @@
 package com.tristankirkham.coursemanager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +29,7 @@ import com.tristankirkham.coursemanager.database.AssessmentEntity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.recyclerview_adapters.AssessmentAdapter;
 import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
+import com.tristankirkham.coursemanager.utilities.MyReceiver;
 import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
@@ -58,6 +62,10 @@ public class CourseEditorActivity extends AppCompatActivity {
     private AssessmentViewModel assessmentViewModel;
     private ShareActionProvider shareActionProvider;
     private String note;
+    private Date courseStartDate;
+    private Date courseEndDate;
+    private String courseName;
+
 
     @BindView(R.id.course_title)
     TextView courseTitleView;
@@ -358,20 +366,19 @@ public class CourseEditorActivity extends AppCompatActivity {
         });
 
 
-
         if (item.getItemId() == android.R.id.home) {
 
             saveAndReturn();
             return true;
 
-        } else if (item.getItemId() == R.id.action_delete) {
+        } else if (item.getItemId() == R.id.action_delete_course) {
 
             courseEditorViewModel.deleteCourse();
             finish();
 
         } else if (item.getItemId() == R.id.menu_item_share) {
 
-            if(!note.isEmpty()) {
+            if (!note.isEmpty()) {
 
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareActionProvider.setShareIntent(sharingIntent);
@@ -386,7 +393,76 @@ public class CourseEditorActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please save a course note first, and then try again", Toast.LENGTH_LONG).show();
             }
 
-            }
+        } else if (item.getItemId() == R.id.action_set_course_start_date_notification) {
+
+
+            courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
+                @Override
+                public void onChanged(@NonNull CourseEntity courseEntity) {
+
+                    courseStartDate = courseEntity.getStartDate();
+                    courseName = courseEntity.getCourseName();
+
+
+                }
+
+            });
+
+
+            Intent intent = new Intent(CourseEditorActivity.this, MyReceiver.class);
+            PendingIntent sender = PendingIntent.getBroadcast(CourseEditorActivity.this, 0, intent, 0);
+
+            intent.putExtra("CourseTitle", courseName);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, courseStartDate.getTime() + 1000, sender);
+
+            Toast.makeText(this, "Course start date notification has been set!", Toast.LENGTH_LONG).show();
+
+
+
+
+
+        } else if (item.getItemId() == R.id.action_set_course_end_date_notification) {
+
+
+
+            courseEditorViewModel.courseLiveData.observe(this, new Observer<CourseEntity>() {
+                @Override
+                public void onChanged(@NonNull CourseEntity courseEntity) {
+
+
+                    courseEndDate = courseEntity.getEndDate();
+                    courseName = courseEntity.getCourseName();
+
+
+                }
+
+            });
+
+
+            Intent intent = new Intent(CourseEditorActivity.this, MyReceiver.class);
+            PendingIntent sender = PendingIntent.getBroadcast(CourseEditorActivity.this, 0, intent, 0);
+
+            intent.putExtra("CourseTitle", courseName);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, courseEndDate.getTime() + 1000, sender);
+
+            Toast.makeText(this, "Course end date notification has been set!", Toast.LENGTH_LONG).show();
+
+
+
+
+
+
+
+        }
+
+
+
+
+
 
 
 

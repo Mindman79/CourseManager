@@ -25,9 +25,11 @@ import android.widget.Toast;
 import com.tristankirkham.coursemanager.database.AssessmentEntity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.utilities.MyReceiver;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentEditorViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,9 +63,6 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     @BindView(R.id.assessment_type_selector)
     Spinner assessmentTypeView;
 
-    @BindView(R.id.set_notification_button)
-    Button setNotificationButton;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +86,6 @@ public class AssessmentEditorActivity extends AppCompatActivity {
         initAssessmentViewModel();
 
         initSpinner();
-
-
 
 
     }
@@ -121,7 +118,7 @@ public class AssessmentEditorActivity extends AppCompatActivity {
 
 
                     assessmentTitleView.setText(assessmentEntity.getAssessmentName());
-                    assessmentDateView.setText(assessmentEntity.getAssessmentDate().toString());
+                    assessmentDateView.setText(TextFormatter.fullDateFormat.format(assessmentEntity.getAssessmentDate()));
                     assessmentTypeView.setSelection(assessmentEntity.getAssessmentType());
 
 
@@ -160,11 +157,20 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     }
 
 
-
     private void saveAndReturn() {
 
-        String assessmentTitle = assessmentTitleView.getText().toString();
-        int assessmentType = assessmentTypeView.getSelectedItemPosition();
+        String assessmentTitle = null;
+        int assessmentType = 0;
+        Date assessmentDate = null;
+
+        try {
+            assessmentTitle = assessmentTitleView.getText().toString();
+            assessmentType = assessmentTypeView.getSelectedItemPosition();
+            assessmentDate = TextFormatter.fullDateFormat.parse(assessmentDateView.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+
+        }
 
 
         assessmentEditorViewModel.assessmentLiveData.observe(this, new Observer<AssessmentEntity>() {
@@ -172,6 +178,7 @@ public class AssessmentEditorActivity extends AppCompatActivity {
             public void onChanged(@NonNull AssessmentEntity assessmentEntity) {
 
                 int existingCourseId = assessmentEntity.getCourseId();
+
 
 
 
@@ -186,10 +193,9 @@ public class AssessmentEditorActivity extends AppCompatActivity {
         });
 
 
-
         if (assessmentTitle != null && !assessmentTitle.isEmpty()) {
 
-            assessmentEditorViewModel.saveAssessment(assessmentTitle, assessmentType, new Date(assessmentDateView.getText().toString()), course_id);
+            assessmentEditorViewModel.saveAssessment(assessmentTitle, assessmentType, assessmentDate, course_id);
 
 
             finish();
@@ -197,18 +203,14 @@ public class AssessmentEditorActivity extends AppCompatActivity {
 
         } else {
 
-            Toast.makeText(this, "Data has NOT been entered, returning to previous screen", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Data has NOT been completely entered, please fill out form completely or use device back button to return without saving", Toast.LENGTH_SHORT).show();
 
-            finish();
+            //finish();
 
 
         }
 
     }
-
-
-
-
 
 
     @Override
@@ -217,10 +219,37 @@ public class AssessmentEditorActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             saveAndReturn();
             return true;
-        } else if (item.getItemId() == R.id.action_delete) {
+        } else if (item.getItemId() == R.id.action_delete_assessment) {
 
             assessmentEditorViewModel.deleteAssessment();
             finish();
+
+
+        } else if (item.getItemId() == R.id.action_set_assessment_notification) {
+
+
+            assessmentEditorViewModel.assessmentLiveData.observe(this, new Observer<AssessmentEntity>() {
+                @Override
+                public void onChanged(@NonNull AssessmentEntity assessmentEntity) {
+
+                    assessmentDate = assessmentEntity.getAssessmentDate();
+                    assessmentTitle = assessmentEntity.getAssessmentName();
+
+
+                }
+
+            });
+
+
+            Intent intent = new Intent(AssessmentEditorActivity.this, MyReceiver.class);
+            PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
+
+            intent.putExtra("AssessmentTitle", assessmentTitle);
+
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, assessmentDate.getTime() + 1000, sender);
+
+            Toast.makeText(this, "Assessment due date notification has been set!", Toast.LENGTH_LONG).show();
 
 
         }
@@ -251,43 +280,6 @@ public class AssessmentEditorActivity extends AppCompatActivity {
     }
 
 
-    @OnClick(R.id.set_notification_button)
-    void notificationButtonHandler() {
-
-
-
-        assessmentEditorViewModel.assessmentLiveData.observe(this, new Observer<AssessmentEntity>() {
-            @Override
-            public void onChanged(@NonNull AssessmentEntity assessmentEntity) {
-
-                assessmentDate = assessmentEntity.getAssessmentDate();
-                assessmentTitle = assessmentEntity.getAssessmentName();
-
-
-            }
-
-        });
-
-
-        Intent intent = new Intent(AssessmentEditorActivity.this, MyReceiver.class);
-        PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
-
-        intent.putExtra("AssessmentTitle", assessmentTitle);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, assessmentDate.getTime() + 1000, sender);
-
-    }
-
-
-
-
-
-
-
-
-
-//Add delete menu option
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!isNewAssessment) {
@@ -298,11 +290,6 @@ public class AssessmentEditorActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
 
     }
-
-
-
-
-
 
 
 }
