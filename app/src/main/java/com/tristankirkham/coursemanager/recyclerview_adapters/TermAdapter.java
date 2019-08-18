@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.tristankirkham.coursemanager.R;
 import com.tristankirkham.coursemanager.TermEditorActivity;
 import com.tristankirkham.coursemanager.database.TermEntity;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 
 import java.util.List;
 
@@ -49,9 +50,10 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final TermEntity term = termList.get(position);
+
         holder.termTitle.setText(term.getTitle());
-        /*holder.termStartDate.setText(term.getStartDate().toString());
-        holder.termEndDate.setText(term.getEndDate().toString());*/
+        holder.termStartDate.setText(TextFormatter.fullDateFormat.format(term.getStartDate()));
+        holder.termEndDate.setText(TextFormatter.fullDateFormat.format(term.getEndDate()));
 
 
         //Set edit FAB click listener
@@ -76,19 +78,15 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        //Needs to match ID of TextView in layout file
-
 
         @BindView(R.id.term_title)
         TextView termTitle;
 
-
-        /*@BindView(R.id.note_start_date)
+        @BindView(R.id.term_start_date)
         TextView termStartDate;
 
-
-        @BindView(R.id.note_end_date)
-        TextView termEndDate;*/
+        @BindView(R.id.term_end_date)
+        TextView termEndDate;
 
         @BindView(R.id.term_fab)
         FloatingActionButton termFab;
