@@ -57,9 +57,18 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".utilities.MyReceiver"
+            android:name=".utilities.CourseEndReceiver"
             android:enabled="true"
             android:exported="true"></receiver>
+
+        <receiver
+            android:name=".utilities.CourseStartReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver
+            android:name=".utilities.AssessmentReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

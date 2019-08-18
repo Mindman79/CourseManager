@@ -3,7 +3,6 @@ package com.tristankirkham.coursemanager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
@@ -28,12 +27,11 @@ import android.widget.Toast;
 import com.tristankirkham.coursemanager.database.AssessmentEntity;
 import com.tristankirkham.coursemanager.database.CourseEntity;
 import com.tristankirkham.coursemanager.recyclerview_adapters.AssessmentAdapter;
-import com.tristankirkham.coursemanager.recyclerview_adapters.CourseAdapter;
-import com.tristankirkham.coursemanager.utilities.MyReceiver;
+import com.tristankirkham.coursemanager.utilities.CourseEndReceiver;
+import com.tristankirkham.coursemanager.utilities.CourseStartReceiver;
 import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentViewModel;
 import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
-import com.tristankirkham.coursemanager.viewmodel.CourseViewModel;
 
 
 import java.text.ParseException;
@@ -409,13 +407,15 @@ public class CourseEditorActivity extends AppCompatActivity {
             });
 
 
-            Intent intent = new Intent(CourseEditorActivity.this, MyReceiver.class);
-            PendingIntent sender = PendingIntent.getBroadcast(CourseEditorActivity.this, 0, intent, 0);
+            Intent intent = new Intent(CourseEditorActivity.this, CourseStartReceiver.class);
 
             intent.putExtra("CourseTitle", courseName);
 
+            PendingIntent sender = PendingIntent.getBroadcast(CourseEditorActivity.this, 0, intent, 0);
+
+
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, courseStartDate.getTime() + 1000, sender);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, courseStartDate.getTime(), sender);
 
             Toast.makeText(this, "Course start date notification has been set!", Toast.LENGTH_LONG).show();
 
@@ -441,13 +441,16 @@ public class CourseEditorActivity extends AppCompatActivity {
             });
 
 
-            Intent intent = new Intent(CourseEditorActivity.this, MyReceiver.class);
-            PendingIntent sender = PendingIntent.getBroadcast(CourseEditorActivity.this, 0, intent, 0);
+            Intent intent = new Intent(CourseEditorActivity.this, CourseEndReceiver.class);
 
             intent.putExtra("CourseTitle", courseName);
 
+
+            PendingIntent sender = PendingIntent.getBroadcast(CourseEditorActivity.this, 0, intent, 0);
+
+
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, courseEndDate.getTime() + 1000, sender);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, courseEndDate.getTime(), sender);
 
             Toast.makeText(this, "Course end date notification has been set!", Toast.LENGTH_LONG).show();
 

@@ -7,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
@@ -15,31 +14,46 @@ import com.tristankirkham.coursemanager.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
-public class MyReceiver extends BroadcastReceiver {
-
+public class CourseStartReceiver extends BroadcastReceiver {
 
     static int notificationID;
     String channel_id = "test";
-
 
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
 
-        String assessmentName = intent.getStringExtra("AssessmentTitle");
+        String courseName = intent.getStringExtra("CourseTitle");
+
+        String notificationTitle = null;
+        String notificationContents = null;
 
 
-        //if(extras != null)
+        if (courseName != null) {
 
-        Toast.makeText(context, "Notification", Toast.LENGTH_LONG).show();
-        createNotificationChannel(context, channel_id);
-        Notification n = new NotificationCompat.Builder(context, channel_id)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle("WGU assessment due today:" + Integer.toString(notificationID))
-                .setContentText("Assessment: ").build();
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(notificationID++, n);
+
+            notificationTitle = "WGU course " + courseName + " starts today!";
+            notificationContents = "Please begin reviewing course materials";
+
+
+            Toast.makeText(context, notificationTitle, Toast.LENGTH_LONG).show();
+            createNotificationChannel(context, channel_id);
+            Notification n = new NotificationCompat.Builder(context, channel_id)
+                    .setSmallIcon(R.drawable.ic_launcher_foreground)
+                    .setContentTitle(notificationTitle + " - ID: " + Integer.toString(notificationID))
+                    .setContentText(notificationContents).build();
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            notificationManager.notify(notificationID++, n);
+
+            intent.getExtras().clear();
+
+
+
+        }
+
+
+
 
     }
 
@@ -47,7 +61,6 @@ public class MyReceiver extends BroadcastReceiver {
     private void createNotificationChannel(Context context, String CHANNEL_ID) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -63,7 +76,3 @@ public class MyReceiver extends BroadcastReceiver {
         }
     }
 }
-
-
-
-

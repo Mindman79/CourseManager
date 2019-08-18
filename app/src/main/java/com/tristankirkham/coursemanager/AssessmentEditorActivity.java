@@ -8,26 +8,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tristankirkham.coursemanager.database.AssessmentEntity;
-import com.tristankirkham.coursemanager.database.CourseEntity;
-import com.tristankirkham.coursemanager.utilities.MyReceiver;
+import com.tristankirkham.coursemanager.utilities.AssessmentReceiver;
 import com.tristankirkham.coursemanager.utilities.TextFormatter;
 import com.tristankirkham.coursemanager.viewmodel.AssessmentEditorViewModel;
-import com.tristankirkham.coursemanager.viewmodel.CourseEditorViewModel;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -41,7 +35,6 @@ import butterknife.OnClick;
 import static com.tristankirkham.coursemanager.utilities.Constants.ASSESSMENT_ID_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.COURSE_ID_KEY;
 import static com.tristankirkham.coursemanager.utilities.Constants.EDITING_KEY;
-import static com.tristankirkham.coursemanager.utilities.Constants.TERM_ID_KEY;
 
 public class AssessmentEditorActivity extends AppCompatActivity {
 
@@ -241,14 +234,16 @@ public class AssessmentEditorActivity extends AppCompatActivity {
             });
 
 
-            Intent intent = new Intent(AssessmentEditorActivity.this, MyReceiver.class);
-
-            PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
+            Intent intent = new Intent(AssessmentEditorActivity.this, AssessmentReceiver.class);
 
             intent.putExtra("AssessmentTitle", assessmentTitle);
 
+
+            PendingIntent sender = PendingIntent.getBroadcast(AssessmentEditorActivity.this, 0, intent, 0);
+
+
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, assessmentDate.getTime() + 1000, sender);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, assessmentDate.getTime(), sender);
 
             Toast.makeText(this, "Assessment due date notification has been set!", Toast.LENGTH_LONG).show();
 
