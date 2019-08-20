@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.tristankirkham.coursemanager.CourseEditorActivity;
 import com.tristankirkham.coursemanager.R;
 import com.tristankirkham.coursemanager.database.CourseEntity;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 
 import java.util.List;
 
@@ -40,9 +41,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
 
         //Call layout view file here
-        View view = inflater.inflate(R.layout.course_list_item, parent,false);
+        View view = inflater.inflate(R.layout.course_list_item, parent, false);
         return new ViewHolder(view);
-
 
 
     }
@@ -54,10 +54,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         final CourseEntity course = coursesList.get(position);
 
 
-        //TODO: Add any other fields that needs to be visible in the recyclerview columns
         holder.course_title.setText(course.getCourseName());
-
-
+        holder.course_start_date.setText(TextFormatter.fullDateFormat.format(course.getStartDate()));
+        holder.course_end_date.setText(TextFormatter.fullDateFormat.format(course.getEndDate()));
 
 
         //Set edit FAB click listener
@@ -84,6 +83,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
         @BindView(R.id.course_title)
         TextView course_title;
+
+        @BindView(R.id.course_start_date)
+        TextView course_start_date;
+
+        @BindView(R.id.course_end_date)
+        TextView course_end_date;
 
         @BindView(R.id.course_fab)
         FloatingActionButton course_fab;

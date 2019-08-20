@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.tristankirkham.coursemanager.AssessmentEditorActivity;
 import com.tristankirkham.coursemanager.R;
 import com.tristankirkham.coursemanager.database.AssessmentEntity;
+import com.tristankirkham.coursemanager.utilities.TextFormatter;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
         final AssessmentEntity assessment = assessmentList.get(position);
 
         holder.assessment_title.setText(assessment.getAssessmentName());
+        holder.assessment_date.setText(TextFormatter.fullDateFormat.format(assessment.getAssessmentDate()));
 
 
 
@@ -87,6 +89,9 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Vi
 
         @BindView(R.id.assessment_title)
         TextView assessment_title;
+
+        @BindView(R.id.assessment_date)
+        TextView assessment_date;
 
         @BindView(R.id.assessment_fab)
         FloatingActionButton assessment_fab;

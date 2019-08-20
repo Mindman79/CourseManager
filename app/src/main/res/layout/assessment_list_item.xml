@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="60dp">
 
 
     <android.support.design.widget.FloatingActionButton
@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/fab_margin"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="@dimen/list_fab_margin"
         android:layout_marginBottom="@dimen/list_fab_margin"
         app:backgroundTint="@color/colorPrimary"
@@ -20,23 +19,41 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.079"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-         />
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
 
     <TextView
         android:id="@+id/assessment_title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="TextView"
-        android:maxLines="2"
+        android:layout_marginEnd="16dp"
         android:ellipsize="end"
-        android:textSize="@dimen/list_text_size"
+        android:maxLines="2"
+        android:text="ASSESSMENT NAME"
         android:textColor="@color/list_text_color"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+
+
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/assessment_fab"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintVertical_bias="0.277" />
+
+    <TextView
+        android:id="@+id/assessment_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="DATE"
+        android:textColor="@color/list_text_color"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/assessment_fab" />
 
 </android.support.constraint.ConstraintLayout>
